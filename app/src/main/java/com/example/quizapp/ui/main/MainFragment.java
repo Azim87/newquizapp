@@ -46,7 +46,6 @@ public class MainFragment extends BaseFragment {
 
         mainViewModel = ViewModelProviders
                 .of(getActivity()).get(MainViewModel.class);
-        mainViewModel.getCount();
         mainViewModel.count.observe(this, integer ->
                 counterTextView.setText(String.valueOf(integer)));
     }

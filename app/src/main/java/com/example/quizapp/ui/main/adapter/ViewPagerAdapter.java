@@ -17,17 +17,17 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     @NonNull
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment;
+        Fragment fragment = null;
 
         switch (position) {
             case 0:
                 fragment = MainFragment.newInstance();
                 break;
             case 1:
-                fragment = SettingsFragment.newInstance();
-                break;
-            default:
                 fragment = HistoryFragment.newInstance();
+                break;
+            case 2:
+                fragment = SettingsFragment.newInstance();
                 break;
         }
         return fragment;

@@ -42,7 +42,6 @@ public class SettingsFragment extends BaseFragment {
         settingViewModel = ViewModelProviders.of(getActivity())
                 .get(MainViewModel.class);
 
-        settingViewModel.getCount();
         settingViewModel.count.observe(this, integer ->
                 textView.setText(String.valueOf(integer)));
     }

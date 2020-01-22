@@ -6,19 +6,14 @@ import androidx.lifecycle.ViewModel;
 public class MainViewModel extends ViewModel {
     public MutableLiveData<Integer> count = new MutableLiveData<>();
 
-    public void getCount() {
-        count.setValue(0);
-    }
+    int counter = 0;
 
     void countIncrement() {
-        Integer currentCount = count.getValue();
-        if (currentCount != null)
-            count.setValue(currentCount + 1);
+        count.setValue(++counter);
     }
 
     void countDecrement() {
-        Integer currentCount = count.getValue();
-        if (currentCount != null)
-            count.setValue(currentCount - 1);
+        count.setValue(--counter);
     }
+
 }

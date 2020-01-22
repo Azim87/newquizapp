@@ -89,14 +89,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        if (doublePressBackToExit) {
-            super.onBackPressed();
-            return;
-        }
+        if (viewPager.getCurrentItem() != 0) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 3, true);
+        } else {
 
-        doublePressBackToExit = true;
-        ShowToast.message("Press again to exit");
-        new Handler().postDelayed(() ->
-                doublePressBackToExit = false, 2000);
+            if (doublePressBackToExit) {
+                super.onBackPressed();
+                return;
+            }
+            doublePressBackToExit = true;
+            ShowToast.message("Press again to exit");
+            new Handler().postDelayed(() ->
+                    doublePressBackToExit = false, 2000);
+        }
     }
 }

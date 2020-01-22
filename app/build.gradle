@@ -41,4 +41,10 @@ dependencies {
     // material design
     implementation 'com.google.android.material:material:1.0.0'
 
+    // live data
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+
+    // nice spinner
+    implementation 'com.github.arcadefire:nice-spinner:1.4.4'
+
 }

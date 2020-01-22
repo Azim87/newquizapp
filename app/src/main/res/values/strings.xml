@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">QuizApp</string>
-    <string name="bottom_navigation">navigation</string>
-    <string name="bottom_map">map</string>
-    <string name="bottom_profile">profile</string>
+    <string name="bottom_quiz">quiz</string>
+    <string name="bottom_history">history</string>
+    <string name="bottom_settings">settings</string>
+    <string name="history">History</string>
+    <string name="Quiz">Quiz</string>
+    <string name="settings">Settings</string>
 </resources>

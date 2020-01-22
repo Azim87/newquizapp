@@ -1,4 +1,6 @@
 package com.example.quizapp.ui.settings;
 
-public class SettingViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class SettingViewModel extends ViewModel {
 }

@@ -1,4 +1,6 @@
 package com.example.quizapp.ui.history;
 
-public class HistoryViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class HistoryViewModel extends ViewModel {
 }

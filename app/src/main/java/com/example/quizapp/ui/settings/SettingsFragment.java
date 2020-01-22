@@ -32,7 +32,6 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     protected void setUpView(View view) {
-        ButterKnife.bind(this, view);
     }
 
     @Override

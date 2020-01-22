@@ -36,8 +36,6 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void setUpView(View view) {
-        ButterKnife.bind(this, view);
-
     }
 
     @Override

@@ -10,15 +10,19 @@ public abstract class BaseRetrofitCallBack<T> implements Callback<T> {
 
     public abstract void onFailure(Exception e);
 
-
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         if (response.isSuccessful()) {
-            onSuccess(response.body());
+            if (response.body() != null) {
+                onSuccess(response.body());
+
+            } else {
+                onFailure(new Exception("Response body is empty " + response.code()));
+            }
         } else {
-            onFailure(new Exception("Response body is empty " + response.code()));
+            onFailure(new Exception("Request failed " + response.code()));
         }
-        onFailure(new Exception("Error, bad request " + response.code()));
+
     }
 
     @Override

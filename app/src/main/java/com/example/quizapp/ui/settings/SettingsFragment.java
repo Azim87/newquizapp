@@ -19,7 +19,7 @@ public class SettingsFragment extends BaseFragment {
     @BindView(R.id.count_view)
     TextView textView;
 
-    private MainViewModel settingViewModel;
+    private SettingViewModel settingViewModel;
 
     public static Fragment newInstance() {
         return new SettingsFragment();
@@ -38,10 +38,6 @@ public class SettingsFragment extends BaseFragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        settingViewModel = ViewModelProviders.of(getActivity())
-                .get(MainViewModel.class);
-
-        settingViewModel.count.observe(this, integer ->
-                textView.setText(String.valueOf(integer)));
+        settingViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
     }
 }

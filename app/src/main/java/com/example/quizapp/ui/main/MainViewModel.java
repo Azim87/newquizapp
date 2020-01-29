@@ -1,17 +1,34 @@
 package com.example.quizapp.ui.main;
 
-import androidx.lifecycle.MutableLiveData;
+import android.util.Log;
+
 import androidx.lifecycle.ViewModel;
 
-public class MainViewModel extends ViewModel {
-    public MutableLiveData<Integer> count = new MutableLiveData<>();
-    private int counter = 0;
+import com.example.quizapp.App;
+import com.example.quizapp.data.IQuizRepository;
+import com.example.quizapp.data.remote.IQuizApiService;
+import com.example.quizapp.models.Question;
 
-    void countIncrement() {
-        count.setValue(++counter);
+import java.util.List;
+
+public class MainViewModel extends ViewModel {
+    private IQuizRepository mQuizRepository = App.iQuizRepository;
+
+    public MainViewModel() {
     }
 
-    void countDecrement() {
-        count.setValue(--counter);
+    public void getQuizQuestions(int amount, Integer category, String hard) {
+        mQuizRepository.getQuizQuestions(amount, category, hard,
+                new IQuizApiService.QuestionCallBack() {
+                    @Override
+                    public void onSuccess(List<Question> result) {
+                        Log.d("ololo", "on success: " + result.get(0).getQuestion());
+                    }
+
+                    @Override
+                    public void onFailure(Exception e) {
+                        Log.d("ololo", "on failure: " + e.getLocalizedMessage());
+                    }
+                });
     }
 }

@@ -1,4 +1,6 @@
 package com.example.quizapp.data;
 
-public class QuizRepository {
+import com.example.quizapp.data.remote.IQuizRepository;
+
+public class QuizRepository implements IQuizRepository {
 }

@@ -24,13 +24,14 @@ public class QuizApiClient implements IQuizApiService {
         return retrofit;
     }
 
-    private QuizApiService quizApiService = retrofit.create(QuizApiService.class;
+    private QuizApiService quizApiService = retrofit.create(QuizApiService.class);
 
     @Override
     public void getQuestions(int amount, Integer category, String difficulty, QuestionCallBack questionCallBack) {
         Call<QuizQuestionsResponse> call = quizApiService.getQuestions(
-                amount, category, difficulty
-        );
+                amount,
+                category,
+                difficulty);
         call.enqueue(new Callback<QuizQuestionsResponse>() {
             @Override
             public void onResponse(Call<QuizQuestionsResponse> call, Response<QuizQuestionsResponse> response) {

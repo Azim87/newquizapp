@@ -6,12 +6,47 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title_history"
+        android:id="@+id/title_main"
         style="@style/AppTitles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/Quiz"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title_category_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category"
+        app:layout_constraintBottom_toTopOf="@id/category_spinner"
+        app:layout_constraintStart_toStartOf="@id/category_spinner"
+        app:layout_constraintTop_toBottomOf="@id/title_main" />
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/category_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/title_difficulty_spinner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_category_spinner" />
+
+    <TextView
+        android:id="@+id/title_difficulty_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/difficulty"
+        app:layout_constraintBottom_toTopOf="@id/difficulty_spinner"
+        app:layout_constraintStart_toStartOf="@id/difficulty_spinner"
+        app:layout_constraintTop_toBottomOf="@id/title_category_spinner" />
+
+    <org.angmarch.views.NiceSpinner
+        android:id="@+id/difficulty_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_difficulty_spinner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,4 +6,6 @@
     <string name="history">History</string>
     <string name="Quiz">Quiz</string>
     <string name="settings">Settings</string>
+    <string name="category">Category</string>
+    <string name="difficulty">Difficulty</string>
 </resources>

@@ -21,11 +21,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTitles">
+    <style name="AppTitles" parent="AppTheme.BigTitleText">
         <item name="android:textColor">@color/colorTitle</item>
-        <item name="android:fontFamily">@font/sftext_bold</item>
         <item name="android:textSize">@dimen/appTitle</item>
         <item name="android:layout_marginTop">@dimen/appTitleMarginTop</item>
         <item name="android:layout_marginStart">@dimen/appTitleMarginStart</item>
+    </style>
+
+    <style name="AppTheme.BigTitleText">
+        <item name="android:fontFamily">@font/sftext_bold</item>
     </style>
 </resources>

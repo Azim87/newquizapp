@@ -28,5 +28,4 @@
         <item name="android:layout_marginTop">@dimen/appTitleMarginTop</item>
         <item name="android:layout_marginStart">@dimen/appTitleMarginStart</item>
     </style>
-
 </resources>

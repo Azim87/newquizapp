@@ -30,7 +30,11 @@ public class SettingsFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         settingViewModel = ViewModelProviders.of(this).get(SettingViewModel.class);
+        subscribeToViewModel();
+    }
+
+    private void subscribeToViewModel() {
+
     }
 }

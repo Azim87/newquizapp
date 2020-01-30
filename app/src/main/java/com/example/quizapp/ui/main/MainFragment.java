@@ -31,6 +31,10 @@ public class MainFragment extends BaseFragment {
         super.onActivityCreated(savedInstanceState);
 
         mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
+        subscribeToViewModel();
+    }
+
+    private void subscribeToViewModel() {
         mainViewModel.getQuizQuestions(10, 9, "easy");
     }
 }

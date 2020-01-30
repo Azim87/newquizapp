@@ -8,4 +8,6 @@
     <string name="settings">Settings</string>
     <string name="category">Category</string>
     <string name="difficulty">Difficulty</string>
+    <string name="question_amount">Question amount:</string>
+    <string name="_question_amount">0</string>
 </resources>

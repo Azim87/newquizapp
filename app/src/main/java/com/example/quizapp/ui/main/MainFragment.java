@@ -109,6 +109,5 @@ public class MainFragment extends BaseFragment {
                 seekBar.getProgress(),
                 categoryId,
                 difficultySpinner.getSelectedItem().toString());
-        ShowToast.message("main fragment " + seekBar.getProgress() + "  " + categoryId + "  " + difficultySpinner.getSelectedItem());
     }
 }

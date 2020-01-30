@@ -33,4 +33,8 @@ public class QuizViewModel extends ViewModel {
             }
         });
     }
+
+    public void onSkipClick() {
+        currentQuestionPosition.setValue(currentQuestionPosition.getValue() +1);
+    }
 }

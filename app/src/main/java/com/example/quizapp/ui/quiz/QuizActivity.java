@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -16,10 +16,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.R;
 import com.example.quizapp.ui.quiz.adapter.QuizAdapter;
-import com.example.quizapp.utils.ShowToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class QuizActivity extends AppCompatActivity {
     private QuizViewModel quizViewModel;
@@ -34,7 +34,9 @@ public class QuizActivity extends AppCompatActivity {
     @BindView(R.id.quiz_progress)
     ProgressBar quizProgress;
     @BindView(R.id.quiz_category)
-    TextView quizTextView;
+    TextView quizCategory;
+    @BindView(R.id.progress_count)
+    TextView quizProgressTextView;
     @BindView(R.id.quiz_skip_button)
     Button quizSkipButton;
 
@@ -54,14 +56,14 @@ public class QuizActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         quizViewModel = ViewModelProviders.of(this)
                 .get(QuizViewModel.class);
-        adapter = new QuizAdapter();
-        getExtraIntentData();
         subscribeToViewModel();
+        getExtraIntentData();
         initViews();
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
+        adapter = new QuizAdapter();
         quizRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         quizRecycler.setAdapter(adapter);
         quizRecycler.setOnTouchListener((v, event) -> true);
@@ -78,16 +80,20 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void subscribeToViewModel() {
-        quizViewModel.currentQuestionPosition.observe(this, integer -> {
-            Log.d("ololo", "subscribeToViewModel: " + integer);
-            position = integer;
-            ShowToast.message(" " + integer);
+        quizViewModel.questionList.observe(this, questions -> {
+            quizProgress.setMax(questions.size());
+            adapter.setList(questions);
         });
 
-        quizViewModel.questionList.observe(this, questions -> {
-            //
-            Log.d("ololo", "onChanged: " + questions.get(position).getCategory());
-            quizTextView.setText(questions.get(position).getCategory());
+        quizViewModel.currentQuestionPosition.observe(this, position -> {
+            quizProgress.setProgress(position + 1);
+            quizProgressTextView.setText(position + 1 + "/" + adapter.getItemCount());
+            quizRecycler.smoothScrollToPosition(position);
         });
+    }
+
+    @OnClick(R.id.quiz_skip_button)
+    void onSkipClick(View view) {
+        quizViewModel.onSkipClick();
     }
 }

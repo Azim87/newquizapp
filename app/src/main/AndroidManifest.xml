@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".ui.quiz.QuizActivity"></activity>
         <activity
             android:name=".splash.SplashActivity"
             android:theme="@style/Splash_screen">

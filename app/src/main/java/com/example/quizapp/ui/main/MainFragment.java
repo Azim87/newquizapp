@@ -1,33 +1,31 @@
 package com.example.quizapp.ui.main;
 
 import android.os.Build;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProviders;
-
 import com.example.quizapp.R;
 import com.example.quizapp.base.BaseFragment;
+import com.example.quizapp.ui.quiz.QuizActivity;
+import com.example.quizapp.utils.ShowToast;
 import com.example.quizapp.utils.SimpleSeekBarChangeListener;
+import com.example.quizapp.utils.SpinnerHelper;
 
 import org.angmarch.views.NiceSpinner;
 
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MainFragment extends BaseFragment {
-    @BindView(R.id.amount_seekbar)
-    SeekBar seekBar;
-    @BindView(R.id.category_spinner)
-    NiceSpinner categorySpinner;
-    @BindView(R.id.difficulty_spinner)
-    NiceSpinner difficultySpinner;
-    @BindView(R.id.question_amount_quantity)
-    TextView questionAmount;
-
-    private MainViewModel mainViewModel;
+    @BindView(R.id.amount_seekbar) SeekBar seekBar;
+    @BindView(R.id.category_spinner) NiceSpinner categorySpinner;
+    @BindView(R.id.difficulty_spinner) NiceSpinner difficultySpinner;
+    @BindView(R.id.question_amount_quantity) TextView questionAmount;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -40,6 +38,12 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void setUpView(View view) {
+        getSeekBarProgress();
+        initCategorySpinner();
+        initDifficultySpinner();
+    }
+
+    private void getSeekBarProgress() {
         questionAmount.setText(String.valueOf(seekBar.getProgress()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             seekBar.setMin(5);
@@ -53,15 +57,58 @@ public class MainFragment extends BaseFragment {
         });
     }
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        mainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        subscribeToViewModel();
+    //region category spinner list
+    private void initCategorySpinner() {
+        List<String> category = new LinkedList<>(Arrays.asList("ANY CATEGORY"));
+        category.add("GENERAL KNOWLEDGE");
+        category.add("ENTERTAINMENT: BOOKS");
+        category.add("ENTERTAINMENT: FILM");
+        category.add("ENTERTAINMENT: MUSIC");
+        category.add("ENTERTAINMENT: MUSICALS & THEATRES");
+        category.add("ENTERTAINMENT: TELEVISION");
+        category.add("ENTERTAINMENT: VIDEO GAMES");
+        category.add("ENTERTAINMENT: BOARD GAMES");
+        category.add("SCIENCE & NATURE");
+        category.add("SCIENCE: COMPUTERS");
+        category.add("SCIENCE: MATHEMATICS");
+        category.add("MYTHOLOGY");
+        category.add("SPORTS");
+        category.add("GEOGRAPHY");
+        category.add("HISTORY");
+        category.add("POLITICS");
+        category.add("ART");
+        category.add("CELEBRITIES");
+        category.add("ANIMALS");
+        category.add("VEHICLES");
+        category.add("ENTERTAINMENT: COMICS");
+        category.add("SCIENCE: GADGETS");
+        category.add("ENTERTAINMENT: JAPANESE ANIME & MANGA");
+        category.add("ENTERTAINMENT: CARTOON & ANIMATIONS");
+        SpinnerHelper.set(category, categorySpinner);
     }
+    //endregion
 
-    private void subscribeToViewModel() {
-        mainViewModel.getQuizQuestions(10, 9, "easy");
+    //region difficulty spinner list
+    private void initDifficultySpinner() {
+        List<String> difficulty = new LinkedList<>(Arrays.asList("ANY DIFFICULTY"));
+        difficulty.add("EASY");
+        difficulty.add("MEDIUM");
+        difficulty.add("HARD");
+        SpinnerHelper.set(difficulty, difficultySpinner);
+    }
+    //endregion
+
+    @OnClick(R.id.button_start)
+    public void startOnClick(View view) {
+        int categoryId = 0;
+        if (categorySpinner.getSelectedIndex() != 0) {
+            categoryId = categorySpinner.getSelectedIndex() + 8;
+        }
+
+        QuizActivity.start(getContext(),
+                seekBar.getProgress(),
+                categoryId,
+                difficultySpinner.getSelectedItem().toString());
+        ShowToast.message("main fragment " + seekBar.getProgress() + "  " + categoryId + "  " + difficultySpinner.getSelectedItem());
     }
 }

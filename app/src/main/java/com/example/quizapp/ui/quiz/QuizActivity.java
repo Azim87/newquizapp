@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -54,8 +55,6 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         ButterKnife.bind(this);
-        quizViewModel = ViewModelProviders.of(this)
-                .get(QuizViewModel.class);
         subscribeToViewModel();
         getExtraIntentData();
         initViews();
@@ -80,12 +79,15 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void subscribeToViewModel() {
+        quizViewModel = ViewModelProviders.of(this)
+                .get(QuizViewModel.class);
         quizViewModel.questionList.observe(this, questions -> {
             quizProgress.setMax(questions.size());
             adapter.setList(questions);
         });
 
         quizViewModel.currentQuestionPosition.observe(this, position -> {
+            quizCategory.setText(adapter.getListPosition().get(position).getCategory());
             quizProgress.setProgress(position + 1);
             quizProgressTextView.setText(position + 1 + "/" + adapter.getItemCount());
             quizRecycler.smoothScrollToPosition(position);

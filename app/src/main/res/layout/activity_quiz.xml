@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/quiz_category"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/sfdisplay_semibold"
@@ -16,6 +16,8 @@
         android:text="@string/quiz_category"
         android:textColor="#1A051D"
         android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="@+id/quiz_progress"
+        app:layout_constraintStart_toStartOf="@+id/quiz_progress"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -34,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="100dp"
         android:max="50"
         android:progress="35"
@@ -68,5 +70,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

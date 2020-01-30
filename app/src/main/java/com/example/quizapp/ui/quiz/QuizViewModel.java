@@ -22,8 +22,8 @@ public class QuizViewModel extends ViewModel {
             @Override
             public void onSuccess(List<Question> result) {
                 if (result != null) {
-                    currentQuestionPosition.setValue(0);
                     questionList.setValue(result);
+                    currentQuestionPosition.setValue(0);
                 }
             }
 
@@ -35,6 +35,6 @@ public class QuizViewModel extends ViewModel {
     }
 
     public void onSkipClick() {
-        currentQuestionPosition.setValue(currentQuestionPosition.getValue() +1);
+        currentQuestionPosition.setValue(currentQuestionPosition.getValue() + 1);
     }
 }

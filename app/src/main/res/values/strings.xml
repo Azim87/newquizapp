@@ -11,4 +11,7 @@
     <string name="question_amount">Question amount:</string>
     <string name="_question_amount">0</string>
     <string name="start">Start</string>
+    <string name="quiz_category">category</string>
+    <string name="progress_amount">0/0</string>
+    <string name="skip">Skip</string>
 </resources>

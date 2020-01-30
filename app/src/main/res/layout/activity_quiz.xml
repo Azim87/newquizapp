@@ -1,9 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.quiz.QuizActivity">
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/quiz_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sfdisplay_semibold"
+        android:gravity="center"
+        android:paddingTop="17dp"
+        android:paddingBottom="17dp"
+        android:text="@string/quiz_category"
+        android:textColor="#1A051D"
+        android:textSize="17sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="24dp"
+        android:src="@drawable/ic_left_black"
+        app:layout_constraintBottom_toBottomOf="@+id/quiz_category"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/quiz_category" />
+
+    <ProgressBar
+        android:id="@+id/quiz_progress"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="100dp"
+        android:max="50"
+        android:progress="35"
+        app:layout_constraintTop_toBottomOf="@id/quiz_category" />
+
+    <TextView
+        android:id="@+id/progress_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/progress_amount"
+        app:layout_constraintEnd_toEndOf="@+id/quiz_progress"
+        app:layout_constraintStart_toStartOf="@+id/quiz_progress"
+        app:layout_constraintTop_toBottomOf="@+id/quiz_progress" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/quiz_recycler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/quiz_skip_button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_count" />
+
+    <Button
+        android:id="@+id/quiz_skip_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:text="@string/skip"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

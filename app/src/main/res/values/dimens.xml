@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="appTitle">24sp</dimen>
+    <dimen name="historyCatTitle">17sp</dimen>
     <dimen name="appTitleMarginTop">32dp</dimen>
     <dimen name="appTitleMarginStart">19dp</dimen>
 </resources>

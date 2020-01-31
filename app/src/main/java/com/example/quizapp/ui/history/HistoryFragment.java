@@ -12,6 +12,9 @@ import com.example.quizapp.R;
 import com.example.quizapp.base.BaseFragment;
 import com.example.quizapp.ui.history.adapter.HistoryAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 
 public class HistoryFragment extends BaseFragment {
@@ -39,10 +42,19 @@ public class HistoryFragment extends BaseFragment {
         HistoryAdapter adapter = new HistoryAdapter();
         historyRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         historyRecycler.setAdapter(adapter);
+        adapter.historyList(putFakeData());
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+    }
+
+    private List<String> putFakeData() {
+        List<String> history = new ArrayList<>();
+        history.add("Films df adfkl lkjdfokhj kpdsjfofan kjdkjf9dalv lkjdagj");
+        history.add("Video df adfkl lkjdfokhj kpdsjfofan kjdkjf9dalv lkjdagj");
+        history.add("Music df adfkl lkjdfokhj kpdsjfofan kjdkjf9dalv lkjdagj");
+        return history;
     }
 }

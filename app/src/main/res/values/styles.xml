@@ -28,11 +28,21 @@
         <item name="android:layout_marginStart">@dimen/appTitleMarginStart</item>
     </style>
 
-    <style name="CustomProgressBar">
-
+    <style name="HistoryItemCategory" parent="AppTheme.Bold">
+        <item name="android:textColor">@color/colorTitle</item>
+        <item name="android:textSize">@dimen/historyCatTitle</item>
     </style>
 
     <style name="AppTheme.BigTitleText">
         <item name="android:fontFamily">@font/sftext_bold</item>
+    </style>
+    <style name="AppTheme.SemiBold">
+        <item name="android:fontFamily">@font/sftext_semibold</item>
+    </style>
+    <style name="AppTheme.Bold">
+        <item name="android:fontFamily">@font/sfdisplay_bold</item>
+    </style>
+    <style name="AppTheme.Thin">
+        <item name="android:fontFamily">@font/sftext_light</item>
     </style>
 </resources>

@@ -49,6 +49,8 @@
                 android:id="@+id/history_more"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_more_horiz_light_gray"
                 app:layout_constraintBottom_toBottomOf="@id/history_cat"
                 app:layout_constraintRight_toRightOf="parent"

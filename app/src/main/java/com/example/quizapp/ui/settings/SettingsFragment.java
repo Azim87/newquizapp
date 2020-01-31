@@ -1,7 +1,11 @@
 package com.example.quizapp.ui.settings;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -10,7 +14,11 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.quizapp.R;
 import com.example.quizapp.base.BaseFragment;
 
+import butterknife.BindView;
+
 public class SettingsFragment extends BaseFragment {
+    @BindView(R.id.share)
+    TextView shareTV;
 
     private SettingViewModel settingViewModel;
 
@@ -25,6 +33,24 @@ public class SettingsFragment extends BaseFragment {
 
     @Override
     protected void setUpView(View view) {
+        shareTV.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setMessage("Хотите поделится с друзьями?");
+            builder.setNegativeButton("Нет", (dialog, which) -> builder.setCancelable(true));
+            builder.setPositiveButton("Да", (dialog, which) -> {
+                try {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND_MULTIPLE);
+                    shareIntent.setType("text/plain");
+                    shareIntent.putExtra(Intent.EXTRA_TEXT,
+                            "Hey check out my profile at: https://www.facebook.com/kgz.mail");
+                    startActivity(Intent.createChooser(shareIntent, "Выбрать"));
+                } catch (Exception e) {
+                    e.getLocalizedMessage();
+                }
+            });
+            builder.show().create();
+        });
     }
 
     @Override

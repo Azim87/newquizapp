@@ -31,16 +31,12 @@ public class QuizActivity extends AppCompatActivity {
     private String difficulty;
     private QuizAdapter adapter;
 
-    @BindView(R.id.quiz_recycler)
-    RecyclerView quizRecycler;
-    @BindView(R.id.quiz_progress)
-    ProgressBar quizProgress;
-    @BindView(R.id.quiz_category)
-    TextView quizCategory;
-    @BindView(R.id.progress_count)
-    TextView quizProgressTextView;
-    @BindView(R.id.quiz_skip_button)
-    Button quizSkipButton;
+    @BindView(R.id.quiz_recycler) RecyclerView quizRecycler;
+    @BindView(R.id.quiz_progress) ProgressBar quizProgress;
+    @BindView(R.id.progress_bar) ProgressBar loadingProgessBar;
+    @BindView(R.id.quiz_category) TextView quizCategory;
+    @BindView(R.id.progress_count) TextView quizProgressTextView;
+    @BindView(R.id.quiz_skip_button) Button quizSkipButton;
 
     public static void start(Context context, int amount, int category, String difficulty) {
         Intent intent = new Intent(context, QuizActivity.class);
@@ -59,6 +55,7 @@ public class QuizActivity extends AppCompatActivity {
         subscribeToViewModel();
         getExtraIntentData();
         initViews();
+        loadingProgessBar.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -83,6 +80,7 @@ public class QuizActivity extends AppCompatActivity {
         quizViewModel = ViewModelProviders.of(this)
                 .get(QuizViewModel.class);
         quizViewModel.questionList.observe(this, questions -> {
+            loadingProgessBar.setVisibility(View.INVISIBLE);
             quizProgress.setMax(questions.size());
             adapter.setList(questions);
         });

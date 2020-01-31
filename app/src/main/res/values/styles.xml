@@ -28,6 +28,10 @@
         <item name="android:layout_marginStart">@dimen/appTitleMarginStart</item>
     </style>
 
+    <style name="CustomProgressBar">
+
+    </style>
+
     <style name="AppTheme.BigTitleText">
         <item name="android:fontFamily">@font/sftext_bold</item>
     </style>

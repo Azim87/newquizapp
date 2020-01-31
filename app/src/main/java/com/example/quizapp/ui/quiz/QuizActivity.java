@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import com.example.quizapp.ui.quiz.adapter.QuizAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.example.quizapp.R.anim.button_anim;
 
 public class QuizActivity extends AppCompatActivity {
     private final static String EXTRA_AMOUNT = "amount";
@@ -52,9 +56,9 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         ButterKnife.bind(this);
+        initViews();
         subscribeToViewModel();
         getExtraIntentData();
-        initViews();
         loadingProgessBar.setVisibility(View.VISIBLE);
     }
 
@@ -64,16 +68,6 @@ public class QuizActivity extends AppCompatActivity {
         quizRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         quizRecycler.setAdapter(adapter);
         quizRecycler.setOnTouchListener((v, event) -> true);
-    }
-
-    private void getExtraIntentData() {
-        amount = getIntent().getIntExtra(EXTRA_AMOUNT, 0);
-        category = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
-        difficulty = getIntent().getStringExtra(EXTRA_DIFFICULTY).toLowerCase();
-        if (difficulty.equals("any difficulty")) {
-            difficulty = null;
-        }
-        quizViewModel.getQuizQuestion(amount, category, difficulty);
     }
 
     private void subscribeToViewModel() {
@@ -93,8 +87,20 @@ public class QuizActivity extends AppCompatActivity {
         });
     }
 
+    private void getExtraIntentData() {
+        amount = getIntent().getIntExtra(EXTRA_AMOUNT, 0);
+        category = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
+        difficulty = getIntent().getStringExtra(EXTRA_DIFFICULTY).toLowerCase();
+        if (difficulty.equals("any difficulty")) {
+            difficulty = null;
+        }
+        quizViewModel.getQuizQuestion(amount, category, difficulty);
+    }
+
     @OnClick(R.id.quiz_skip_button)
     void onSkipClick(View view) {
+        final Animation animation = AnimationUtils.loadAnimation(this, button_anim);
+        view.startAnimation(animation);
         quizViewModel.onSkipClick();
     }
 }

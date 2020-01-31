@@ -1,7 +1,10 @@
 package com.example.quizapp.ui.main;
 
 import android.os.Build;
+import android.os.Handler;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -25,6 +28,7 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.category_spinner) NiceSpinner categorySpinner;
     @BindView(R.id.difficulty_spinner) NiceSpinner difficultySpinner;
     @BindView(R.id.question_amount_quantity) TextView questionAmount;
+    private Animation animation;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -40,6 +44,7 @@ public class MainFragment extends BaseFragment {
         getSeekBarProgress();
         initCategorySpinner();
         initDifficultySpinner();
+        animation = AnimationUtils.loadAnimation(getContext(), R.anim.button_anim);
     }
 
     private void getSeekBarProgress() {
@@ -99,13 +104,17 @@ public class MainFragment extends BaseFragment {
 
     @OnClick(R.id.button_start)
     public void startOnClick(View view) {
-        int categoryId = 0;
-        if (categorySpinner.getSelectedIndex() != 0) {
-            categoryId = categorySpinner.getSelectedIndex() + 8;
-        }
-        QuizActivity.start(getContext(),
-                seekBar.getProgress(),
-                categoryId,
-                difficultySpinner.getSelectedItem().toString());
+        view.startAnimation(animation);
+        new Handler().postDelayed(() -> {
+            int categoryId = 0;
+            if (categorySpinner.getSelectedIndex() != 0) {
+                categoryId = categorySpinner.getSelectedIndex() + 8;
+            }
+            QuizActivity.start(getContext(),
+                    seekBar.getProgress(),
+                    categoryId,
+                    difficultySpinner.getSelectedItem().toString());
+        },500);
+
     }
 }

@@ -17,4 +17,8 @@
     <string name="quiz_guestion">What is the largest city and commercial capital of Sri Lanka?</string>
     <string name="type_false">No</string>
     <string name="type_true">Yes</string>
+    <string name="history_cat">Category: Mixed</string>
+    <string name="history_diff">Difficulty: Hard</string>
+    <string name="history_ans">Correct answers 0/0</string>
+    <string name="history_time">20 may 20/20/2020</string>
 </resources>

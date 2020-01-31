@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.example.quizapp.R;
 import com.example.quizapp.base.BaseFragment;
 import com.example.quizapp.ui.quiz.QuizActivity;
-import com.example.quizapp.utils.ShowToast;
 import com.example.quizapp.utils.SimpleSeekBarChangeListener;
 import com.example.quizapp.utils.SpinnerHelper;
 
@@ -104,7 +103,6 @@ public class MainFragment extends BaseFragment {
         if (categorySpinner.getSelectedIndex() != 0) {
             categoryId = categorySpinner.getSelectedIndex() + 8;
         }
-
         QuizActivity.start(getContext(),
                 seekBar.getProgress(),
                 categoryId,

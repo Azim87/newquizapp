@@ -1,0 +1,18 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <corners android:radius="3dip" />
+            <solid android:color="@color/seek_bar_secondary_progress" />
+        </shape>
+    </item>
+
+    <item>
+        <clip>
+            <shape>
+                <corners android:radius="3dip" />
+                <solid android:color="@color/colorButtonStart" />
+            </shape>
+        </clip>
+    </item>
+
+</layer-list>

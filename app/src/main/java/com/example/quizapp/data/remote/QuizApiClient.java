@@ -1,6 +1,7 @@
 package com.example.quizapp.data.remote;
 
 import com.example.quizapp.base.BaseRetrofitCallBack;
+import com.example.quizapp.data.IQuizRepository;
 import com.example.quizapp.data.remote.model.QuizQuestionsResponse;
 
 import retrofit2.Call;
@@ -20,7 +21,7 @@ public class QuizApiClient implements IQuizApiService {
 
     @Override
     public void getQuestions(int amount, Integer category, String difficulty,
-                             QuestionCallBack questionCallBack) {
+                             IQuizRepository.QuizCallBack callBack) {
         Call<QuizQuestionsResponse> call = quizApiService.getQuestions(
                 amount,
                 category,
@@ -28,15 +29,16 @@ public class QuizApiClient implements IQuizApiService {
         call.enqueue(new BaseRetrofitCallBack<QuizQuestionsResponse>() {
             @Override
             public void onSuccess(QuizQuestionsResponse results) {
-                questionCallBack.onSuccess(results.getResults());
+                callBack.onSuccess(results.getResults());
             }
 
             @Override
             public void onFailure(Exception e) {
-                questionCallBack.onFailure(new Exception(e.getMessage()));
+                callBack.onFailure(new Exception(e.getMessage()));
             }
         });
     }
+
 
     private interface QuizApiService {
         @GET("api.php")

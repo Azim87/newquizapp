@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -23,11 +22,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class QuizActivity extends AppCompatActivity {
+    private final static String EXTRA_AMOUNT = "amount";
+    private final static String EXTRA_CATEGORY = "category";
+    private final static String EXTRA_DIFFICULTY = "difficulty";
     private QuizViewModel quizViewModel;
     private int amount;
     private int category;
     private String difficulty;
-    private Integer position = 0;
     private QuizAdapter adapter;
 
     @BindView(R.id.quiz_recycler)
@@ -43,9 +44,9 @@ public class QuizActivity extends AppCompatActivity {
 
     public static void start(Context context, int amount, int category, String difficulty) {
         Intent intent = new Intent(context, QuizActivity.class);
-        intent.putExtra("amount", amount);
-        intent.putExtra("category", category);
-        intent.putExtra("difficulty", difficulty);
+        intent.putExtra(EXTRA_AMOUNT, amount);
+        intent.putExtra(EXTRA_CATEGORY, category);
+        intent.putExtra(EXTRA_DIFFICULTY, difficulty);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
@@ -69,9 +70,9 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     private void getExtraIntentData() {
-        amount = getIntent().getIntExtra("amount", 0);
-        category = getIntent().getIntExtra("category", 0);
-        difficulty = getIntent().getStringExtra("difficulty").toLowerCase();
+        amount = getIntent().getIntExtra(EXTRA_AMOUNT, 0);
+        category = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
+        difficulty = getIntent().getStringExtra(EXTRA_DIFFICULTY).toLowerCase();
         if (difficulty.equals("any difficulty")) {
             difficulty = null;
         }

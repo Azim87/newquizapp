@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity
         implements BottomNavigationView.OnNavigationItemSelectedListener {
 
     private boolean doublePressBackToExit = false;
-    private MainViewModel mainViewModel;
 
     @BindView(R.id.main_bottom_nav)
     BottomNavigationView bottomNavigationView;
@@ -38,8 +37,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mainViewModel = ViewModelProviders.of(this)
-                .get(MainViewModel.class);
 
         ButterKnife.bind(this);
         setUpView();

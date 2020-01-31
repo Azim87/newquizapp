@@ -1,32 +1,30 @@
 package com.example.quizapp.data;
 
 import com.example.quizapp.data.remote.IQuizApiService;
-import com.example.quizapp.data.remote.QuizApiClient;
 import com.example.quizapp.models.Question;
 
 import java.util.List;
 
 public class QuizRepository implements IQuizRepository {
-    private QuizApiClient mQuizApiClient;
+    private IQuizApiService mQuizApiClient;
 
-    public QuizRepository(QuizApiClient quizApiClient) {
-        mQuizApiClient = quizApiClient;
+    public QuizRepository(IQuizApiService apiService) {
+        mQuizApiClient = apiService;
     }
 
     @Override
-    public void getQuizQuestions(int amount, Integer category, String difficulty,
-                                 IQuizApiService.QuestionCallBack questionCallBack) {
-
-        mQuizApiClient.getQuestions(amount, category, difficulty, new IQuizApiService.QuestionCallBack() {
+    public void getQuizQuestions(int amount, Integer category, String difficulty, QuizCallBack callBack) {
+        mQuizApiClient.getQuestions(amount, category, difficulty, new QuizCallBack() {
             @Override
             public void onSuccess(List<Question> result) {
-                questionCallBack.onSuccess(result);
+                callBack.onSuccess(result);
             }
 
             @Override
             public void onFailure(Exception e) {
-                questionCallBack.onFailure(new Exception(e.getMessage()));
+                callBack.onFailure(new Exception(e.getMessage()));
             }
         });
+
     }
 }

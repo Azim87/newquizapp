@@ -41,6 +41,23 @@
         <item name="android:paddingLeft">13dp</item>
     </style>
 
+    <style name="DividerStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@color/colorTitle</item>
+
+    </style>
+
+    <style name="SettingStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingStart">25dp</item>
+    </style>
+
     <style name="AppTheme.BigTitleText">
         <item name="android:fontFamily">@font/sftext_bold</item>
     </style>

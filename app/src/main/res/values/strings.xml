@@ -21,4 +21,6 @@
     <string name="history_diff">Difficulty: Hard</string>
     <string name="history_ans">Correct answers 0/0</string>
     <string name="history_time">20 may 20/20/2020</string>
+    <string name="share_this_app">Share this app</string>
+    <string name="rate_us">Rate us</string>
 </resources>

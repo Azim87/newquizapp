@@ -38,7 +38,6 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         holder.category.setText("Category: " + mHistory.get(position));
         holder.category.setSelected(true);
-
     }
 
     @Override

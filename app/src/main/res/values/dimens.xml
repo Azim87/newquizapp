@@ -4,4 +4,5 @@
     <dimen name="historyCatTitle">17sp</dimen>
     <dimen name="appTitleMarginTop">32dp</dimen>
     <dimen name="appTitleMarginStart">19dp</dimen>
+    <dimen name="skip_corner">20dp</dimen>
 </resources>

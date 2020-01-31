@@ -33,6 +33,14 @@
         <item name="android:textSize">@dimen/historyCatTitle</item>
     </style>
 
+    <style name="SkipButton" parent="AppTheme.Heavy">
+        <item name="android:background">@drawable/skip_button_style</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:layout_marginBottom">80dp</item>
+        <item name="android:paddingRight">13dp</item>
+        <item name="android:paddingLeft">13dp</item>
+    </style>
+
     <style name="AppTheme.BigTitleText">
         <item name="android:fontFamily">@font/sftext_bold</item>
     </style>
@@ -44,5 +52,9 @@
     </style>
     <style name="AppTheme.Thin">
         <item name="android:fontFamily">@font/sftext_light</item>
+    </style>
+
+    <style name="AppTheme.Heavy">
+        <item name="android:fontFamily">@font/sftext_heavy</item>
     </style>
 </resources>

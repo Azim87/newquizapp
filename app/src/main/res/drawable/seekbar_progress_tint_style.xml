@@ -2,7 +2,7 @@
     <item android:id="@android:id/background">
         <shape android:shape="line">
             <stroke
-                android:width="4dp"
+                android:width="5dp"
                 android:color="@color/seek_bar_secondary_progress" />
             <corners android:radius="2dp"/>
         </shape>
@@ -12,19 +12,8 @@
         <clip>
             <shape android:shape="line">
                 <stroke
-                    android:width="4dp"
+                    android:width="5dp"
                     android:color="@color/seek_bar_progress" />
-                <corners android:radius="2dp"/>
-            </shape>
-        </clip>
-    </item>
-
-    <item android:id="@android:id/secondaryProgress">
-        <clip>
-            <shape android:shape="line">
-                <stroke
-                    android:width="4dp"
-                    android:color="@color/seek_bar_secondary_progress" />
                 <corners android:radius="2dp"/>
             </shape>
         </clip>

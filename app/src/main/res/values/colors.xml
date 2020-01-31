@@ -10,5 +10,6 @@
     <color name="colorButtonStart">#6979F8</color>
     <color name="seek_bar_progress">#6979F8</color>
     <color name="seek_bar_secondary_progress">#D2CFCF</color>
+    <color name="colorSkipButton">#FF6581</color>
 
 </resources>

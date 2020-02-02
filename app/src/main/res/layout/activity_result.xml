@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.result.ResultActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/sfdisplay_bold"
+        android:text="@string/result_title"
+        android:textColor="@color/colorTitle"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/ok_anim"
+        android:layout_width="150dp"
+        android:layout_height="170dp"
+        android:layout_marginLeft="125dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="125dp"
+        app:layout_constraintBottom_toTopOf="@id/results"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:lottie_autoPlay="true"
+        app:lottie_rawRes="@raw/amin_ok" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/results"
+        android:layout_width="match_parent"
+        android:layout_height="175dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginRight="16dp"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="6dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ok_anim">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/result_categ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:fontFamily="@font/sfdisplay_bold"
+                android:text="@string/restult_category_mixed"
+                android:textColor="@color/colorTitle"
+                android:textSize="17sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/result_diff"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/res_difficulty"
+                android:fontFamily="@font/sfdisplay_medium"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/result_categ" />
+
+            <TextView
+                android:id="@+id/result_corr_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:text="@string/res_correct_answers"
+                android:fontFamily="@font/sfdisplay_medium"
+                app:layout_constraintEnd_toEndOf="@+id/result_categ"
+                app:layout_constraintStart_toStartOf="@+id/result_categ"
+                app:layout_constraintTop_toBottomOf="@+id/result_categ" />
+
+            <TextView
+                android:id="@+id/result_res"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:text="@string/result_result"
+                android:fontFamily="@font/sfdisplay_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/result_categ" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/result_finish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="125dp"
+        android:fontFamily="@font/sfdisplay_bold"
+        android:text="@string/result_finish"
+        android:textColor="@color/colorWhite"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

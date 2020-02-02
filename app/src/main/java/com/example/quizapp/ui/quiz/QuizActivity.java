@@ -16,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.quizapp.R;
 import com.example.quizapp.ui.quiz.adapter.QuizAdapter;
 
@@ -41,6 +42,8 @@ public class QuizActivity extends AppCompatActivity {
     @BindView(R.id.quiz_category) TextView quizCategory;
     @BindView(R.id.progress_count) TextView quizProgressTextView;
     @BindView(R.id.quiz_skip_button) Button quizSkipButton;
+    @BindView(R.id.dino_loading)
+    LottieAnimationView loadingView;
 
     public static void start(Context context, int amount, int category, String difficulty) {
         Intent intent = new Intent(context, QuizActivity.class);
@@ -59,7 +62,8 @@ public class QuizActivity extends AppCompatActivity {
         initViews();
         subscribeToViewModel();
         getExtraIntentData();
-        loadingProgessBar.setVisibility(View.VISIBLE);
+        loadingView.setVisibility(View.VISIBLE);
+        loadingProgessBar.setVisibility(View.INVISIBLE);
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -75,6 +79,8 @@ public class QuizActivity extends AppCompatActivity {
                 .get(QuizViewModel.class);
         quizViewModel.questionList.observe(this, questions -> {
             loadingProgessBar.setVisibility(View.INVISIBLE);
+            loadingView.setVisibility(View.INVISIBLE);
+            quizSkipButton.setVisibility(View.VISIBLE);
             quizProgress.setMax(questions.size());
             adapter.setList(questions);
         });

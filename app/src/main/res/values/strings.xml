@@ -23,4 +23,10 @@
     <string name="history_time">20 may 20/20/2020</string>
     <string name="share_this_app">Share this app</string>
     <string name="rate_us">Rate us</string>
+    <string name="res_difficulty">Difficulty</string>
+    <string name="res_correct_answers">Correct answers</string>
+    <string name="result_result">Result</string>
+    <string name="result_finish">Finish</string>
+    <string name="restult_category_mixed">Category: Mixed</string>
+    <string name="result_title">Result</string>
 </resources>

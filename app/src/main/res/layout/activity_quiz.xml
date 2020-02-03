@@ -25,6 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="24dp"
+        android:padding="5dp"
         android:src="@drawable/ic_left_black"
         app:layout_constraintBottom_toBottomOf="@+id/quiz_category"
         app:layout_constraintLeft_toLeftOf="parent"

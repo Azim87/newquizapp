@@ -42,12 +42,11 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
 
     @BindView(R.id.quiz_recycler) RecyclerView quizRecycler;
     @BindView(R.id.quiz_progress) ProgressBar quizProgress;
-    @BindView(R.id.progress_bar) ProgressBar loadingProgessBar;
+    @BindView(R.id.progress_bar) ProgressBar loadingProgressBar;
     @BindView(R.id.quiz_category) TextView quizCategory;
     @BindView(R.id.progress_count) TextView quizProgressTextView;
     @BindView(R.id.quiz_skip_button) Button quizSkipButton;
-    @BindView(R.id.progress_timer)
-    TextView progressTimer;
+    @BindView(R.id.progress_timer) TextView progressTimer;
 
     public static void start(Context context, int amount, int category, String difficulty) {
         Intent intent = new Intent(context, QuizActivity.class);
@@ -66,22 +65,27 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         initViews();
         subscribeToViewModel();
         getExtraIntentData();
-        loadingProgessBar.setVisibility(View.VISIBLE);
+        loadingProgressBar.setVisibility(View.VISIBLE);
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initViews() {
         adapter = new QuizAdapter(this);
-        quizRecycler.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        quizRecycler.setLayoutManager(new LinearLayoutManager(
+                this,
+                RecyclerView.HORIZONTAL,
+                false
+        ));
         quizRecycler.setAdapter(adapter);
         quizRecycler.setOnTouchListener((v, event) -> true);
     }
 
+    @SuppressLint("SetTextI18n")
     private void subscribeToViewModel() {
         quizViewModel = ViewModelProviders.of(this)
                 .get(QuizViewModel.class);
         quizViewModel.questionList.observe(this, questions -> {
-            loadingProgessBar.setVisibility(View.INVISIBLE);
+            loadingProgressBar.setVisibility(View.INVISIBLE);
             quizSkipButton.setVisibility(View.VISIBLE);
             quizProgress.setMax(questions.size());
             adapter.setList(questions);
@@ -98,9 +102,10 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         });
 
         countDownTimer = new CountDownTimer(startTimer, 1) {
+            @SuppressLint("DefaultLocale")
             @Override
             public void onTick(long millisUntilFinished) {
-                progressTimer.setText(" " + millisUntilFinished / 1000);
+                progressTimer.setText(String.format(" %d", millisUntilFinished / 1000));
                 if (millisUntilFinished <= 6000) {
                     progressTimer.setTextColor(Color.RED);
                 }
@@ -124,6 +129,11 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         quizViewModel.getQuizQuestion(amount, category, difficulty);
     }
 
+    @Override
+    public void onBackPressed() {
+        quizViewModel.onBackPressed();
+    }
+
     @OnClick(R.id.quiz_skip_button)
     void onSkipClick(View view) {
         final Animation animation = AnimationUtils.loadAnimation(this, button_anim);
@@ -134,5 +144,10 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     @Override
     public void onAnswerClick(int questionPosition, int answerPosition) {
         ShowToast.message("hello" + questionPosition);
+    }
+
+    @OnClick(R.id.image_back)
+    void onBackPressed(View view) {
+        quizViewModel.onBackPressed();
     }
 }

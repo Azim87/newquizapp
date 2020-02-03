@@ -42,9 +42,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
-        android:fontFamily="@font/sfdisplay_regular"
+        android:fontFamily="@font/sfdisplay_bold"
         android:textSize="15sp"
         android:text="@string/_question_amount"
+        android:textColor="@color/colorTitle"
         app:layout_constraintBottom_toBottomOf="@+id/question_amount_text"
         app:layout_constraintStart_toEndOf="@id/question_amount_text"
         app:layout_constraintTop_toTopOf="@+id/question_amount_text" />

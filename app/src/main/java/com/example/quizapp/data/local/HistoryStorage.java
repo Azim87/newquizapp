@@ -1,6 +1,10 @@
 package com.example.quizapp.data.local;
 
+import androidx.lifecycle.LiveData;
+
 import com.example.quizapp.models.QuizResult;
+
+import java.util.List;
 
 public class HistoryStorage implements IHistoryStorage {
     @Override
@@ -21,5 +25,10 @@ public class HistoryStorage implements IHistoryStorage {
     @Override
     public int deleteById(int id) {
         return 0;
+    }
+
+    @Override
+    public LiveData<List<QuizResult>> getAll() {
+        return null;
     }
 }

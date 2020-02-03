@@ -18,7 +18,6 @@ public class QuizViewModel extends ViewModel {
 
     MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
     MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
-
     SingleLiveEvent<Integer> finishEvent = new SingleLiveEvent<>();
 
     void getQuizQuestion(int amount, int category, String difficulty) {
@@ -54,7 +53,7 @@ public class QuizViewModel extends ViewModel {
         }
     }
 
-    void finishQuiz() {
+    private void finishQuiz() {
         finishEvent.call();
     }
 

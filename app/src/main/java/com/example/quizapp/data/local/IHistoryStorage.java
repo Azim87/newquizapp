@@ -12,5 +12,5 @@ public interface IHistoryStorage {
     public int saveQuizResult(QuizResult quizResult);
     public int deleteAll();
     public int deleteById(int id);
-    public LiveData<List<QuizResult>> getall();
+    public LiveData<List<QuizResult>> getAll();
 }

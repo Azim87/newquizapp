@@ -33,6 +33,7 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.amount_seekbar) SeekBar seekBar;
     @BindView(R.id.category_spinner) NiceSpinner categorySpinner;
     @BindView(R.id.difficulty_spinner) NiceSpinner difficultySpinner;
+    @BindView(R.id.type_spinner) NiceSpinner typeSpinner;
     @BindView(R.id.question_amount_quantity) TextView questionAmount;
     @BindView(R.id.button_start) Button startButton;
     @BindView(R.id.button_retry) Button retryButton;
@@ -56,6 +57,7 @@ public class MainFragment extends BaseFragment {
         getSeekBarProgress();
         initCategorySpinner();
         initDifficultySpinner();
+        initType();
         startOnClick();
         animation = AnimationUtils.loadAnimation(getContext(), R.anim.button_anim);
     }
@@ -127,6 +129,15 @@ public class MainFragment extends BaseFragment {
     }
     //endregion
 
+    //region spinner type
+    private void initType() {
+        List<String> type = new LinkedList<>(Arrays.asList("ANY TYPE"));
+        type.add("BOOLEAN");
+        type.add("MULTIPLE");
+        SpinnerHelper.set(type, typeSpinner);
+    }
+    //endregion
+
 
     private void startOnClick() {
         startButton.setOnClickListener(view -> {
@@ -149,13 +160,10 @@ public class MainFragment extends BaseFragment {
     void retry(View view) {
         progressBar.setVisibility(View.VISIBLE);
         retryButton.setVisibility(View.INVISIBLE);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startButton.setVisibility(View.INVISIBLE);
-                progressBar.setVisibility(View.INVISIBLE);
-                checkNetwork();
-            }
+        new Handler().postDelayed(() -> {
+            startButton.setVisibility(View.INVISIBLE);
+            progressBar.setVisibility(View.INVISIBLE);
+            checkNetwork();
         }, 1500);
     }
 }

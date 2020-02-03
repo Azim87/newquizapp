@@ -97,7 +97,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/container_1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/question_title">
+        app:layout_constraintTop_toTopOf="@id/container_1">
 
         <TextView
             android:id="@+id/question_true"

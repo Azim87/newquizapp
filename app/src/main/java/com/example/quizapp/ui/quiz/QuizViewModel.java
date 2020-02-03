@@ -8,22 +8,26 @@ import androidx.lifecycle.ViewModel;
 import com.example.quizapp.App;
 import com.example.quizapp.data.IQuizRepository;
 import com.example.quizapp.models.Question;
+import com.example.quizapp.utils.SingleLiveEvent;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class QuizViewModel extends ViewModel {
     private IQuizRepository quizRepository = App.iQuizRepository;
-    public MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
-    public MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
+    private List<Question> mQuestion;
 
-    public void getQuizQuestion(int amount, int category, String difficulty) {
+    MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
+    MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
+
+    SingleLiveEvent<Integer> finishEvent = new SingleLiveEvent<>();
+
+    void getQuizQuestion(int amount, int category, String difficulty) {
         quizRepository.getQuizQuestions(amount, category, difficulty, new IQuizRepository.QuizCallBack() {
             @Override
             public void onSuccess(List<Question> result) {
                 if (result != null) {
-                    questionList.setValue(result);
+                    mQuestion = result;
+                    questionList.setValue(mQuestion);
                     currentQuestionPosition.setValue(0);
                 }
             }
@@ -35,11 +39,40 @@ public class QuizViewModel extends ViewModel {
         });
     }
 
+    void onAnswerPositionClick(int position, int selectedAnswerPosition) {
+        if (currentQuestionPosition.getValue() == null || mQuestion == null) {
+            return;
+        }
+
+        mQuestion.get(position).setSelectedAnswerPosition(selectedAnswerPosition);
+        questionList.setValue(mQuestion);
+
+        if (position == mQuestion.size() - 1) {
+            finishQuiz();
+        } else {
+            currentQuestionPosition.setValue(currentQuestionPosition.getValue() + 1);
+        }
+    }
+
+    void finishQuiz() {
+        finishEvent.call();
+    }
+
     void onSkipClick() {
-        currentQuestionPosition.setValue(currentQuestionPosition.getValue() + 1);
+        Integer currentPosition = currentQuestionPosition.getValue();
+        if (currentPosition != null) {
+            onAnswerPositionClick(currentPosition, -1);
+        }
     }
 
     void onBackPressed() {
-        currentQuestionPosition.setValue(currentQuestionPosition.getValue() - 1);
+        Integer currentPosition = currentQuestionPosition.getValue();
+        if (currentPosition != null) {
+            if (currentPosition == 0) {
+                finishEvent.call();
+            } else {
+                currentQuestionPosition.setValue(currentQuestionPosition.getValue() - 1);
+            }
+        }
     }
 }

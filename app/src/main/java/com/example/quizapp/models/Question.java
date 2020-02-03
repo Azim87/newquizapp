@@ -8,7 +8,7 @@ public class Question {
 
     private String category;
 
-    private String type;
+    private EType type;
 
     private EDifficulty difficulty;
 
@@ -22,7 +22,9 @@ public class Question {
 
     private List<String> answers;
 
-    public Question(String category, String type, EDifficulty difficulty, String question, String correctAnswer, List<String> incorrectAnswers) {
+    private Integer selectedAnswerPosition;
+
+    public Question(String category, EType type, EDifficulty difficulty, String question, String correctAnswer, List<String> incorrectAnswers) {
         this.category = category;
         this.type = type;
         this.difficulty = difficulty;
@@ -39,11 +41,11 @@ public class Question {
         this.category = category;
     }
 
-    public String getType() {
+    public EType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(EType type) {
         this.type = type;
     }
 
@@ -85,5 +87,13 @@ public class Question {
 
     public void setAnswers(List<String> answers) {
         this.answers = answers;
+    }
+
+    public Integer getSelectedAnswerPosition() {
+        return selectedAnswerPosition;
+    }
+
+    public void setSelectedAnswerPosition(Integer selectedAnswerPosition) {
+        this.selectedAnswerPosition = selectedAnswerPosition;
     }
 }

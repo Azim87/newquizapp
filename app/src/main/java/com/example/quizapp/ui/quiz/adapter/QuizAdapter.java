@@ -1,5 +1,6 @@
 package com.example.quizapp.ui.quiz.adapter;
 
+import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.R;
+import com.example.quizapp.models.EType;
 import com.example.quizapp.models.Question;
 
 import java.util.ArrayList;
@@ -22,7 +24,6 @@ import butterknife.ButterKnife;
 public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder> {
     private List<Question> mQuestion = new ArrayList<>();
     private OnQuestionClickListener questionClickListener;
-    private Question questions;
 
     public QuizAdapter(OnQuestionClickListener questionClickListener) {
         this.questionClickListener = questionClickListener;
@@ -55,26 +56,18 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         return mQuestion;
     }
 
-    public class QuizViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class QuizViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
 
-        @BindView(R.id.question_title)
-        TextView questionTitle;
-        @BindView(R.id.question_1)
-        TextView questionTextView1;
-        @BindView(R.id.question_2)
-        TextView questionTextView2;
-        @BindView(R.id.question_3)
-        TextView questionTextView3;
-        @BindView(R.id.question_4)
-        TextView questionTextView4;
-        @BindView(R.id.question_true)
-        TextView questionTextViewYes;
-        @BindView(R.id.question_false)
-        TextView questionTextViewNo;
-        @BindView(R.id.container_1)
-        LinearLayout containerMultiple;
-        @BindView(R.id.container_2)
-        LinearLayout containerBoolean;
+        @BindView(R.id.question_title) TextView questionTitle;
+        @BindView(R.id.question_1) TextView questionTextView1;
+        @BindView(R.id.question_2) TextView questionTextView2;
+        @BindView(R.id.question_3) TextView questionTextView3;
+        @BindView(R.id.question_4) TextView questionTextView4;
+        @BindView(R.id.question_true) TextView questionTextViewYes;
+        @BindView(R.id.question_false) TextView questionTextViewNo;
+        @BindView(R.id.container_1) LinearLayout containerMultiple;
+        @BindView(R.id.container_2) LinearLayout containerBoolean;
         private OnQuestionClickListener listener;
 
         public QuizViewHolder(@NonNull View itemView, OnQuestionClickListener listener) {
@@ -90,15 +83,14 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         }
 
         public void onBind(Question question) {
-            questions = question;
             questionTitle.setText(Html.fromHtml(question.getQuestion()));
-            if (question.getType().equals("multiple")) {
+            if (question.getType().equals(EType.MULTIPLE)) {
                 showMultipleQuestionType(question);
                 hideBooleanType();
             } else {
                 hideMultipleType();
             }
-            if (question.getType().equals("boolean")) {
+            if (question.getType().equals(EType.BOOLEAN)) {
                 if (question.getCorrectAnswer().equals("true")) {
                     questionTextViewYes.setText("Yes");
                 } else {
@@ -122,6 +114,14 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         private void hideMultipleType() {
             containerMultiple.setVisibility(View.INVISIBLE);
             containerBoolean.setVisibility(View.VISIBLE);
+        }
+
+        private void setSelectedQuestionColor(Question question) {
+            if (question.getSelectedAnswerPosition().equals(question.getCorrectAnswer())) {
+                questionTextView1.setBackgroundColor(Color.RED);
+            } else {
+                questionTextView1.setBackgroundColor(Color.BLUE);
+            }
         }
 
         @Override

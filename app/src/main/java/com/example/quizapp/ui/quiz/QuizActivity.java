@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.R;
 import com.example.quizapp.ui.quiz.adapter.QuizAdapter;
-import com.example.quizapp.utils.ShowToast;
+import com.example.quizapp.ui.result.ResultActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -33,9 +33,6 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     private final static String EXTRA_CATEGORY = "category";
     private final static String EXTRA_DIFFICULTY = "difficulty";
     private QuizViewModel quizViewModel;
-    private int amount;
-    private int category;
-    private String difficulty;
     private QuizAdapter adapter;
     private CountDownTimer countDownTimer;
     private long startTimer = 15000;
@@ -101,6 +98,12 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
             countDownTimer.start();
         });
 
+        quizViewModel.finishEvent.observe(this, integer -> {
+            finish();
+            ResultActivity.start(QuizActivity.this);
+
+        });
+
         countDownTimer = new CountDownTimer(startTimer, 1) {
             @SuppressLint("DefaultLocale")
             @Override
@@ -113,16 +116,15 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
 
             @Override
             public void onFinish() {
-                ShowToast.message("Time is up!");
                 quizViewModel.onSkipClick();
             }
         };
     }
 
     private void getExtraIntentData() {
-        amount = getIntent().getIntExtra(EXTRA_AMOUNT, 0);
-        category = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
-        difficulty = getIntent().getStringExtra(EXTRA_DIFFICULTY).toLowerCase();
+        int amount = getIntent().getIntExtra(EXTRA_AMOUNT, 0);
+        int category = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
+        String difficulty = getIntent().getStringExtra(EXTRA_DIFFICULTY).toLowerCase();
         if (difficulty.equals("any difficulty")) {
             difficulty = null;
         }
@@ -136,14 +138,15 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
 
     @OnClick(R.id.quiz_skip_button)
     void onSkipClick(View view) {
-        final Animation animation = AnimationUtils.loadAnimation(this, button_anim);
+        final Animation animation = AnimationUtils
+                .loadAnimation(this, button_anim);
         view.startAnimation(animation);
         quizViewModel.onSkipClick();
     }
 
     @Override
     public void onAnswerClick(int questionPosition, int answerPosition) {
-        ShowToast.message("hello" + questionPosition);
+        quizViewModel.onAnswerPositionClick(questionPosition, answerPosition);
     }
 
     @OnClick(R.id.image_back)

@@ -3,6 +3,7 @@ package com.example.quizapp.ui.quiz;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -37,6 +38,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     private String difficulty;
     private QuizAdapter adapter;
     private CountDownTimer countDownTimer;
+    private long startTimer = 15000;
 
     @BindView(R.id.quiz_recycler) RecyclerView quizRecycler;
     @BindView(R.id.quiz_progress) ProgressBar quizProgress;
@@ -91,16 +93,22 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
             quizProgressTextView.setText(position + 1 + "/" + adapter.getItemCount());
             quizRecycler.smoothScrollToPosition(position);
             countDownTimer.cancel();
+            progressTimer.setTextColor(Color.BLUE);
             countDownTimer.start();
         });
-        countDownTimer = new CountDownTimer(15000, 1) {
+
+        countDownTimer = new CountDownTimer(startTimer, 1) {
             @Override
             public void onTick(long millisUntilFinished) {
                 progressTimer.setText(" " + millisUntilFinished / 1000);
+                if (millisUntilFinished <= 6000) {
+                    progressTimer.setTextColor(Color.RED);
+                }
             }
 
             @Override
             public void onFinish() {
+                ShowToast.message("Time is up!");
                 quizViewModel.onSkipClick();
             }
         };

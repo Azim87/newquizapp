@@ -39,7 +39,8 @@
         android:fontFamily="@font/sftext_semibold"
         android:text="00"
         android:textColor="@color/colorQuestion"
-        android:textSize="25sp"
+        android:textSize="20sp"
+        android:padding="5dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

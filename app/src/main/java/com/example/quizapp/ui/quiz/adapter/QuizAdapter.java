@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
 public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder> {
     private List<Question> mQuestion = new ArrayList<>();
     private OnQuestionClickListener questionClickListener;
+    private Question questions;
 
     public QuizAdapter(OnQuestionClickListener questionClickListener) {
         this.questionClickListener = questionClickListener;
@@ -89,6 +90,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         }
 
         public void onBind(Question question) {
+            questions = question;
             questionTitle.setText(Html.fromHtml(question.getQuestion()));
             if (question.getType().equals("multiple")) {
                 showMultipleQuestionType(question);

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -35,6 +36,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     private int category;
     private String difficulty;
     private QuizAdapter adapter;
+    private CountDownTimer countDownTimer;
 
     @BindView(R.id.quiz_recycler) RecyclerView quizRecycler;
     @BindView(R.id.quiz_progress) ProgressBar quizProgress;
@@ -42,6 +44,8 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     @BindView(R.id.quiz_category) TextView quizCategory;
     @BindView(R.id.progress_count) TextView quizProgressTextView;
     @BindView(R.id.quiz_skip_button) Button quizSkipButton;
+    @BindView(R.id.progress_timer)
+    TextView progressTimer;
 
     public static void start(Context context, int amount, int category, String difficulty) {
         Intent intent = new Intent(context, QuizActivity.class);
@@ -86,7 +90,20 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
             quizProgress.setProgress(position + 1);
             quizProgressTextView.setText(position + 1 + "/" + adapter.getItemCount());
             quizRecycler.smoothScrollToPosition(position);
+            countDownTimer.cancel();
+            countDownTimer.start();
         });
+        countDownTimer = new CountDownTimer(15000, 1) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                progressTimer.setText(" " + millisUntilFinished / 1000);
+            }
+
+            @Override
+            public void onFinish() {
+                quizViewModel.onSkipClick();
+            }
+        };
     }
 
     private void getExtraIntentData() {

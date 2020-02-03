@@ -29,4 +29,7 @@
     <string name="result_finish">Finish</string>
     <string name="restult_category_mixed">Category: Mixed</string>
     <string name="result_title">Result</string>
+    <string name="res_all">All</string>
+    <string name="res_score">0/0</string>
+    <string name="res_percent">0%</string>
 </resources>

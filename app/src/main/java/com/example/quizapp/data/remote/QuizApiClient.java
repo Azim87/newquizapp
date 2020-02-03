@@ -3,6 +3,11 @@ package com.example.quizapp.data.remote;
 import com.example.quizapp.base.BaseRetrofitCallBack;
 import com.example.quizapp.data.IQuizRepository;
 import com.example.quizapp.data.remote.model.QuizQuestionsResponse;
+import com.example.quizapp.models.Question;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -18,6 +23,8 @@ public class QuizApiClient implements IQuizApiService {
                     .build();
 
     private QuizApiService quizApiService = retrofit.create(QuizApiService.class);
+
+
 
     @Override
     public void getQuestions(int amount, Integer category, String difficulty,

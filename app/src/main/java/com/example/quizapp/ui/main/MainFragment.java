@@ -5,12 +5,18 @@ import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.quizapp.R;
 import com.example.quizapp.base.BaseFragment;
 import com.example.quizapp.ui.quiz.QuizActivity;
+import com.example.quizapp.utils.Connection;
+import com.example.quizapp.utils.ShowToast;
 import com.example.quizapp.utils.SimpleSeekBarChangeListener;
 import com.example.quizapp.utils.SpinnerHelper;
 
@@ -28,7 +34,12 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.category_spinner) NiceSpinner categorySpinner;
     @BindView(R.id.difficulty_spinner) NiceSpinner difficultySpinner;
     @BindView(R.id.question_amount_quantity) TextView questionAmount;
+    @BindView(R.id.button_start) Button startButton;
+    @BindView(R.id.button_retry) Button retryButton;
+    @BindView(R.id.main_container) ConstraintLayout view;
+    @BindView(R.id.main_progress_bar) ProgressBar progressBar;
     private Animation animation;
+
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -41,10 +52,24 @@ public class MainFragment extends BaseFragment {
 
     @Override
     protected void setUpView(View view) {
+        checkNetwork();
         getSeekBarProgress();
         initCategorySpinner();
         initDifficultySpinner();
+        startOnClick();
         animation = AnimationUtils.loadAnimation(getContext(), R.anim.button_anim);
+    }
+
+    private void checkNetwork() {
+        if (!Connection.isInternetAvailable(getContext())) {
+            startButton.setVisibility(View.INVISIBLE);
+            retryButton.setVisibility(View.VISIBLE);
+            ShowToast.message("Internet is not available");
+
+        } else {
+            startButton.setVisibility(View.VISIBLE);
+            retryButton.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void getSeekBarProgress() {
@@ -102,19 +127,35 @@ public class MainFragment extends BaseFragment {
     }
     //endregion
 
-    @OnClick(R.id.button_start)
-    public void startOnClick(View view) {
-        view.startAnimation(animation);
-        new Handler().postDelayed(() -> {
-            int categoryId = 0;
-            if (categorySpinner.getSelectedIndex() != 0) {
-                categoryId = categorySpinner.getSelectedIndex() + 8;
-            }
-            QuizActivity.start(getContext(),
-                    seekBar.getProgress(),
-                    categoryId,
-                    difficultySpinner.getSelectedItem().toString());
-        },500);
 
+    private void startOnClick() {
+        startButton.setOnClickListener(view -> {
+                view.startAnimation(animation);
+                new Handler().postDelayed(() -> {
+                    int categoryId = 0;
+                    if (categorySpinner.getSelectedIndex() != 0) {
+                        categoryId = categorySpinner.getSelectedIndex() + 8;
+                    }
+                    QuizActivity.start(getContext(),
+                            seekBar.getProgress(),
+                            categoryId,
+                            difficultySpinner.getSelectedItem().toString());
+                }, 500);
+
+        });
+    }
+
+    @OnClick(R.id.button_retry)
+    void retry(View view) {
+        progressBar.setVisibility(View.VISIBLE);
+        retryButton.setVisibility(View.INVISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startButton.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+                checkNetwork();
+            }
+        }, 1500);
     }
 }

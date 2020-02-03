@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
@@ -26,6 +27,7 @@
         android:id="@+id/share"
         style="@style/SettingStyle"
         android:text="@string/share_this_app"
+        android:textColor="@color/colorSettingsText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
@@ -40,6 +42,7 @@
     <TextView
         android:id="@+id/rate"
         style="@style/SettingStyle"
+        android:textColor="@color/colorSettingsText"
         android:text="@string/rate_us"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -69,6 +72,7 @@
         android:id="@+id/feedback"
         style="@style/SettingStyle"
         android:text="Leave a feedback"
+        android:textColor="@color/colorSettingsText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
@@ -84,6 +88,8 @@
         android:id="@+id/clear"
         style="@style/SettingStyle"
         android:text="Clear all history"
+        android:fontFamily="@font/sfdisplay_regular"
+        android:textColor="@color/colorClearHistory"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view3" />
@@ -104,4 +110,12 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="v 1.0.0"
+        app:layout_constraintEnd_toEndOf="@+id/logo"
+        app:layout_constraintStart_toStartOf="@+id/logo"
+        app:layout_constraintTop_toBottomOf="@+id/logo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

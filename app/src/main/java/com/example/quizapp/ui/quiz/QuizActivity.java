@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -38,6 +39,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     private QuizAdapter adapter;
     private CountDownTimer countDownTimer;
     private long startTimer = 15000;
+    private  Animation anim;
 
     @BindView(R.id.quiz_recycler) RecyclerView quizRecycler;
     @BindView(R.id.quiz_progress) ProgressBar quizProgress;
@@ -84,7 +86,6 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     private void subscribeToViewModel() {
         quizViewModel = ViewModelProviders.of(this).get(QuizViewModel.class);
 
-
         quizViewModel.questionList.observe(this, questions -> {
             loadingProgressBar.setVisibility(View.INVISIBLE);
             quizSkipButton.setVisibility(View.VISIBLE);
@@ -118,6 +119,16 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
                 progressTimer.setText(String.format(" %d", millisUntilFinished / 1000));
                 if (millisUntilFinished <= 6000) {
                     progressTimer.setTextColor(Color.RED);
+                    if (progressTimer.getVisibility() == View.VISIBLE) {
+                        try {
+                            Thread.sleep(500);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        progressTimer.setVisibility(View.INVISIBLE);
+                    } else {
+                        progressTimer.setVisibility(View.VISIBLE);
+                    }
                 }
             }
 

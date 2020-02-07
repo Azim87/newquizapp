@@ -1,5 +1,6 @@
 package com.example.quizapp.ui.main;
 
+import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Handler;
 import android.view.View;
@@ -40,6 +41,7 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.main_container) ConstraintLayout view;
     @BindView(R.id.main_progress_bar) ProgressBar progressBar;
     private Animation animation;
+    private MediaPlayer mediaPlayer;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -137,9 +139,10 @@ public class MainFragment extends BaseFragment {
     }
     //endregion
 
-
     private void startOnClick() {
+        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.stapler);
         startButton.setOnClickListener(view -> {
+            mediaPlayer.start();
                 view.startAnimation(animation);
                 new Handler().postDelayed(() -> {
                     int categoryId = 0;
@@ -152,9 +155,9 @@ public class MainFragment extends BaseFragment {
                             difficultySpinner.getSelectedItem().toString(),
                             typeSpinner.getSelectedItem().toString());
                 }, 500);
-
         });
     }
+
 
     @OnClick(R.id.button_retry)
     void retry(View view) {

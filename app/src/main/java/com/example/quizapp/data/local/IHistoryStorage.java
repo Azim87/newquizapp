@@ -7,11 +7,15 @@ import com.example.quizapp.models.QuizResult;
 import java.util.List;
 
 public interface IHistoryStorage {
+    QuizResult getQuizResult(int id);
 
-    public QuizResult getQuizResult(int id);
-    public int saveQuizResult(QuizResult quizResult);
-    public int deleteAll();
-    public int deleteById(int id);
-    public int getById(int id);
-    public LiveData<List<QuizResult>> getAll();
+    int saveQuizResult(QuizResult quizResult);
+
+    int deleteAll();
+
+    int deleteById(int id);
+
+    int getById(int id);
+
+    LiveData<List<QuizResult>> getAll();
 }

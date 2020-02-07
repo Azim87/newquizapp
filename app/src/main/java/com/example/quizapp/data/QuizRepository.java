@@ -1,16 +1,26 @@
 package com.example.quizapp.data;
+import androidx.lifecycle.LiveData;
+
+import com.example.quizapp.data.local.IHistoryStorage;
 import com.example.quizapp.data.remote.IQuizApiService;
 import com.example.quizapp.models.Question;
+import com.example.quizapp.models.QuizResult;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class QuizRepository implements IQuizRepository {
     private IQuizApiService mQuizApiClient;
-    public QuizRepository(IQuizApiService apiService) {
+    private IHistoryStorage mHistoryStorage;
+    public QuizRepository(
+            IQuizApiService apiService,
+            IHistoryStorage historyStorage) {
         mQuizApiClient = apiService;
+        mHistoryStorage = historyStorage;
     }
 
+    //region get questions from remote data source
     @Override
     public void getQuizQuestions(int amount, Integer category, String difficulty, String type, QuizCallBack callBack) {
         mQuizApiClient.getQuestions(amount, category, difficulty, type, new QuizCallBack() {
@@ -30,7 +40,9 @@ public class QuizRepository implements IQuizRepository {
             }
         });
     }
+    //endregion
 
+    //region shuffle questions
     private Question shuffleQuestions(Question question) {
         ArrayList<String> answers = new ArrayList<>();
         answers.add(question.getCorrectAnswer());
@@ -39,4 +51,42 @@ public class QuizRepository implements IQuizRepository {
         question.setAnswers(answers);
         return question;
     }
+    //endregion
+
+    //region local data source
+    @Override
+    public QuizResult getQuizResult(int id) {
+        mHistoryStorage.getQuizResult(id);
+        return null;
+    }
+
+    @Override
+    public int saveQuizResult(QuizResult quizResult) {
+        mHistoryStorage.saveQuizResult(quizResult);
+        return 0;
+    }
+
+    @Override
+    public void deleteAll() {
+        mHistoryStorage.deleteAll();
+    }
+
+    @Override
+    public int deleteById(int id) {
+        mHistoryStorage.deleteById(id);
+        return 0;
+    }
+
+    @Override
+    public int getById(int id) {
+        mHistoryStorage.getById(id);
+        return 0;
+    }
+
+    @Override
+    public LiveData<List<QuizResult>> getAll() {
+        mHistoryStorage.getAll();
+        return null;
+    }
+    //endregion
 }

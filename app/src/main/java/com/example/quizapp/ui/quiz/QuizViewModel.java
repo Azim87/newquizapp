@@ -94,6 +94,8 @@ public class QuizViewModel extends ViewModel {
             } else {
                 currentQuestionPosition.setValue(currentQuestionPosition.getValue() - 1);
             }
+        } else {
+            finishEvent.call();
         }
     }
 }

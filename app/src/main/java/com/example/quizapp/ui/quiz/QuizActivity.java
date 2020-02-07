@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.quizapp.R;
 import com.example.quizapp.ui.quiz.adapter.QuizAdapter;
 import com.example.quizapp.ui.result.ResultActivity;
+import com.example.quizapp.utils.ShowToast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -104,6 +105,10 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         quizViewModel.finishEvent.observe(this, aVoid -> {
             ResultActivity.start(QuizActivity.this);
             finish();
+        });
+
+        quizViewModel.message.observe(this, message -> {
+            ShowToast.message(message);
         });
 
         countDownTimer = new CountDownTimer(startTimer, 1) {

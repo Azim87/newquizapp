@@ -19,6 +19,7 @@ public class QuizViewModel extends ViewModel {
     MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
     MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
     SingleLiveEvent<Void> finishEvent = new SingleLiveEvent<>();
+    SingleLiveEvent<String> message = new SingleLiveEvent<>();
 
     void getQuizQuestion(int amount, int category, String difficulty, String type) {
         quizRepository.getQuizQuestions(amount, category, difficulty, type,
@@ -34,7 +35,7 @@ public class QuizViewModel extends ViewModel {
 
             @Override
             public void onFailure(Exception e) {
-                Log.d("ololo", "on failure: " + e.getLocalizedMessage());
+                message.setValue(e.getLocalizedMessage());
             }
         });
     }

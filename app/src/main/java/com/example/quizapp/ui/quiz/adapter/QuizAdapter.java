@@ -1,5 +1,6 @@
 package com.example.quizapp.ui.quiz.adapter;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -99,6 +100,12 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
                     questionTextViewNo.setText("No");
                 }
             }
+            if (question.getSelectedAnswerPosition() != null) {
+                enableQuestionViews(false);
+            } else {
+                enableQuestionViews(true);
+                resetQuestionBackgroundColor();
+            }
         }
 
         private void showMultipleQuestionType(Question question) {
@@ -152,6 +159,31 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
                     setSelectedQuestionColor(question, questionTextView4);
                     break;
             }
+        }
+
+        @SuppressLint("ResourceAsColor")
+        private void resetQuestionBackgroundColor() {
+            questionTextView1.setBackgroundResource(R.drawable.quiestion_textview_style);
+            questionTextView2.setBackgroundResource(R.drawable.quiestion_textview_style);
+            questionTextView3.setBackgroundResource(R.drawable.quiestion_textview_style);
+            questionTextView4.setBackgroundResource(R.drawable.quiestion_textview_style);
+            questionTextViewYes.setBackgroundResource(R.drawable.quiestion_textview_style);
+            questionTextViewNo.setBackgroundResource(R.drawable.quiestion_textview_style);
+            questionTextView1.setTextColor(R.color.colorQuestion);
+            questionTextView2.setTextColor(R.color.colorQuestion);
+            questionTextView3.setTextColor(R.color.colorQuestion);
+            questionTextView4.setTextColor(R.color.colorQuestion);
+            questionTextViewYes.setTextColor(R.color.colorQuestion);
+            questionTextViewNo.setTextColor(R.color.colorQuestion);
+        }
+
+        private void enableQuestionViews(boolean enabled) {
+            questionTextView1.setEnabled(enabled);
+            questionTextView2.setEnabled(enabled);
+            questionTextView3.setEnabled(enabled);
+            questionTextView4.setEnabled(enabled);
+            questionTextViewYes.setEnabled(enabled);
+            questionTextViewNo.setEnabled(enabled);
         }
     }
 

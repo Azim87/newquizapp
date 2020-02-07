@@ -26,6 +26,9 @@ public class QuizViewModel extends ViewModel {
     SingleLiveEvent<Integer> openResultEvent = new SingleLiveEvent<>();
 
     void getQuizQuestion(int amount, int category, String difficulty, String type) {
+        this.amount = amount;
+        this.category = category;
+        this.difficulty = difficulty;
         quizRepository.getQuizQuestions(amount, category, difficulty, type,
                 new IQuizRepository.QuizCallBack() {
             @Override

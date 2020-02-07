@@ -1,21 +1,24 @@
 package com.example.quizapp.models;
 
+import java.util.Date;
 import java.util.List;
 
 public class QuizResult {
 
     private int id;
-    private String category;
+    private int category;
     private String difficulty;
     private List<Question> questions;
     private int correctAnswers;
+    private Date creationDate;
 
-    public QuizResult(int id, String category, String difficulty, List<Question> questions, int correctAnswers) {
+    public QuizResult(int id, int category, String difficulty, List<Question> questions, int correctAnswers, Date creationDate) {
         this.id = id;
         this.category = category;
         this.difficulty = difficulty;
         this.questions = questions;
         this.correctAnswers = correctAnswers;
+        this.creationDate = creationDate;
     }
 
     public int getId() {
@@ -26,11 +29,11 @@ public class QuizResult {
         this.id = id;
     }
 
-    public String getCategory() {
+    public int getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(int category) {
         this.category = category;
     }
 
@@ -57,4 +60,12 @@ public class QuizResult {
     public void setCorrectAnswers(int correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
-}
+
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+ }

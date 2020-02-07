@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -97,21 +98,23 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
             quizCategory.setText(adapter.getListPosition().get(position).getCategory());
             quizProgress.setProgress(position + 1);
             quizProgressTextView.setText(position + 1 + "/" + adapter.getItemCount());
-            quizRecycler.smoothScrollToPosition(position);
-            countDownTimer.cancel();
-            progressTimer.setTextColor(Color.BLUE);
-            progressTimer.setVisibility(View.VISIBLE);
-            countDownTimer.start();
+            new Handler().postDelayed(() -> {
+                quizRecycler.smoothScrollToPosition(position);
+                countDownTimer.cancel();
+                progressTimer.setTextColor(Color.BLUE);
+                progressTimer.setVisibility(View.VISIBLE);
+                countDownTimer.start();
+            },100);
         });
 
         quizViewModel.finishEvent.observe(this, aVoid -> {
-            ResultActivity.start(QuizActivity.this);
             finish();
         });
 
-        quizViewModel.message.observe(this, message -> {
-            ShowToast.message(message);
-        });
+        quizViewModel.message.observe(this, ShowToast::message);
+
+        quizViewModel.openResultEvent.observe(this, resultId ->
+                ResultActivity.start(QuizActivity.this, resultId));
 
         countDownTimer = new CountDownTimer(startTimer, 1) {
             @SuppressLint("DefaultLocale")
@@ -120,7 +123,6 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
                 progressTimer.setText(String.format(" %d", millisUntilFinished / 1000));
                 if (millisUntilFinished <= 6000) {
                     progressTimer.setTextColor(Color.RED);
-
                     if (progressTimer.getVisibility() == View.VISIBLE) {
                         try {
                             Thread.sleep(600);
@@ -152,7 +154,12 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         if (type.equals("any type")) {
             type = null;
         }
-        quizViewModel.getQuizQuestion(amount, category, difficulty, type);
+        quizViewModel.getQuizQuestion(
+                amount,
+                category,
+                difficulty,
+                type
+        );
     }
 
     @Override
@@ -165,12 +172,15 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         final Animation animation = AnimationUtils
                 .loadAnimation(this, button_anim);
         view.startAnimation(animation);
-        quizViewModel.onSkipClick();
+            quizViewModel.onSkipClick();
     }
 
     @Override
     public void onAnswerClick(int questionPosition, int answerPosition) {
-        quizViewModel.onAnswerPositionClick(questionPosition, answerPosition);
+        quizViewModel.onAnswerPositionClick(
+                questionPosition,
+                answerPosition
+        );
     }
 
     @OnClick(R.id.image_back)

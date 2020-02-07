@@ -1,25 +1,29 @@
 package com.example.quizapp.ui.quiz;
 
-import android.util.Log;
-
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.quizapp.App;
+import com.example.quizapp.base.SingleLiveEvent;
 import com.example.quizapp.data.IQuizRepository;
 import com.example.quizapp.models.Question;
-import com.example.quizapp.base.SingleLiveEvent;
+import com.example.quizapp.models.QuizResult;
 
+import java.util.Date;
 import java.util.List;
 
 public class QuizViewModel extends ViewModel {
     private IQuizRepository quizRepository = App.iQuizRepository;
     private List<Question> mQuestion;
+    private int amount;
+    private int category;
+    private String difficulty;
 
     MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
     MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
     SingleLiveEvent<Void> finishEvent = new SingleLiveEvent<>();
     SingleLiveEvent<String> message = new SingleLiveEvent<>();
+    SingleLiveEvent<Integer> openResultEvent = new SingleLiveEvent<>();
 
     void getQuizQuestion(int amount, int category, String difficulty, String type) {
         quizRepository.getQuizQuestions(amount, category, difficulty, type,
@@ -40,6 +44,8 @@ public class QuizViewModel extends ViewModel {
         });
     }
 
+
+
     void onAnswerPositionClick(int position, int selectedAnswerPosition) {
         if (currentQuestionPosition.getValue() == null || mQuestion == null) {
             return;
@@ -56,7 +62,21 @@ public class QuizViewModel extends ViewModel {
     }
 
     private void finishQuiz() {
+        QuizResult quizResult = new QuizResult(
+                0,
+                category,
+                difficulty,
+                mQuestion,
+                getCorrectAnswers(),
+                new Date()
+        );
+        int resultId = quizRepository.saveQuizResult(quizResult);
+        openResultEvent.setValue(resultId);
         finishEvent.call();
+    }
+
+    private int getCorrectAnswers() {
+        return 0;
     }
 
     void onSkipClick() {

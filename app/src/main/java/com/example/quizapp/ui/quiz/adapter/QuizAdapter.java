@@ -6,6 +6,8 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -40,6 +42,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
     @Override
     public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
         holder.onBind(mQuestion.get(position));
+        holder.setAnimation(holder.itemView);
     }
 
     @Override
@@ -70,9 +73,10 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         @BindView(R.id.container_1) LinearLayout containerMultiple;
         @BindView(R.id.container_2) LinearLayout containerBoolean;
         private OnQuestionClickListener listener;
+        private Animation questionAnimation;
         private Question question;
 
-        public QuizViewHolder(@NonNull View itemView, OnQuestionClickListener listener) {
+        QuizViewHolder(@NonNull View itemView, OnQuestionClickListener listener) {
             super(itemView);
             this.listener = listener;
             ButterKnife.bind(this, itemView);
@@ -82,9 +86,10 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             questionTextView4.setOnClickListener(this);
             questionTextViewYes.setOnClickListener(this);
             questionTextViewNo.setOnClickListener(this);
+            questionAnimation = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.button_anim);
         }
 
-        public void onBind(Question question) {
+        void onBind(Question question) {
             this.question = question;
             questionTitle.setText(Html.fromHtml(question.getQuestion()));
             if (question.getType().equals(EType.MULTIPLE)) {
@@ -159,6 +164,10 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
                     setSelectedQuestionColor(question, questionTextView4);
                     break;
             }
+        }
+
+        private void setAnimation(View view) {
+            view.startAnimation(questionAnimation);
         }
 
         @SuppressLint("ResourceAsColor")

@@ -6,7 +6,7 @@ import com.example.quizapp.models.Question;
 import java.util.List;
 
 public interface IQuizRepository {
-    void getQuizQuestions(int amount, Integer category, String difficulty, QuizCallBack callBack);
+    void getQuizQuestions(int amount, Integer category, String difficulty, String type, QuizCallBack callBack);
 
     interface QuizCallBack extends IBaseCallBack<List<Question>> {}
 }

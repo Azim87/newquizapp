@@ -24,6 +24,7 @@ public class ResultActivity extends AppCompatActivity {
 
     public static void start(Context context) {
         Intent resultIntent = new Intent(context, ResultActivity.class);
+        resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(resultIntent);
     }
 
@@ -38,6 +39,10 @@ public class ResultActivity extends AppCompatActivity {
     private void subscribeToViewModel() {
         resultViewModel = ViewModelProviders.of(this).get(ResultViewModel.class);
         resultCategory.setSelected(true);
+    }
+
+    private void getQuizResultData() {
+        resultViewModel.getResult();
     }
 
     @OnClick(R.id.result_finish)

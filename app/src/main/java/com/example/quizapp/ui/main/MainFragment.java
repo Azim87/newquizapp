@@ -41,7 +41,6 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.main_progress_bar) ProgressBar progressBar;
     private Animation animation;
 
-
     public static MainFragment newInstance() {
         return new MainFragment();
     }
@@ -150,7 +149,8 @@ public class MainFragment extends BaseFragment {
                     QuizActivity.start(getContext(),
                             seekBar.getProgress(),
                             categoryId,
-                            difficultySpinner.getSelectedItem().toString());
+                            difficultySpinner.getSelectedItem().toString(),
+                            typeSpinner.getSelectedItem().toString());
                 }, 500);
 
         });

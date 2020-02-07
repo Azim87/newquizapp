@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModel;
 import com.example.quizapp.App;
 import com.example.quizapp.data.IQuizRepository;
 import com.example.quizapp.models.Question;
-import com.example.quizapp.utils.SingleLiveEvent;
+import com.example.quizapp.base.SingleLiveEvent;
 
 import java.util.List;
 
@@ -18,10 +18,11 @@ public class QuizViewModel extends ViewModel {
 
     MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
     MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
-    SingleLiveEvent<Integer> finishEvent = new SingleLiveEvent<>();
+    SingleLiveEvent<Void> finishEvent = new SingleLiveEvent<>();
 
-    void getQuizQuestion(int amount, int category, String difficulty) {
-        quizRepository.getQuizQuestions(amount, category, difficulty, new IQuizRepository.QuizCallBack() {
+    void getQuizQuestion(int amount, int category, String difficulty, String type) {
+        quizRepository.getQuizQuestions(amount, category, difficulty, type,
+                new IQuizRepository.QuizCallBack() {
             @Override
             public void onSuccess(List<Question> result) {
                 if (result != null) {

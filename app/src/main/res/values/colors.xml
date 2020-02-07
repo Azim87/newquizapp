@@ -15,5 +15,7 @@
     <color name="colorSettingsText">#333333</color>
     <color name="colorClearHistory">#BE52F2</color>
     <color name="colorQuestion">#6979F8</color>
+    <color name="colorFalse">#FF3D00</color>
+    <color name="colorTrue">#6979F8</color>
 
 </resources>

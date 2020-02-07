@@ -1,4 +1,4 @@
-package com.example.quizapp.utils;
+package com.example.quizapp.base;
 
 import android.util.Log;
 

@@ -69,6 +69,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         @BindView(R.id.container_1) LinearLayout containerMultiple;
         @BindView(R.id.container_2) LinearLayout containerBoolean;
         private OnQuestionClickListener listener;
+        private Question question;
 
         public QuizViewHolder(@NonNull View itemView, OnQuestionClickListener listener) {
             super(itemView);
@@ -83,6 +84,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         }
 
         public void onBind(Question question) {
+            this.question = question;
             questionTitle.setText(Html.fromHtml(question.getQuestion()));
             if (question.getType().equals(EType.MULTIPLE)) {
                 showMultipleQuestionType(question);
@@ -116,11 +118,13 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             containerBoolean.setVisibility(View.VISIBLE);
         }
 
-        private void setSelectedQuestionColor(Question question) {
-            if (question.getSelectedAnswerPosition().equals(question.getCorrectAnswer())) {
-                questionTextView1.setBackgroundColor(Color.RED);
+        private void setSelectedQuestionColor(Question question, TextView textView) {
+            if (question.getAnswers().get(question.getSelectedAnswerPosition()).equals(question.getCorrectAnswer())) {
+                textView.setBackgroundResource(R.drawable.question_true_style);
+                textView.setTextColor(Color.WHITE);
             } else {
-                questionTextView1.setBackgroundColor(Color.BLUE);
+                textView.setBackgroundResource(R.drawable.question_false_style);
+                textView.setTextColor(Color.WHITE);
             }
         }
 
@@ -130,16 +134,22 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
                 case R.id.question_1:
                 case R.id.question_true:
                     listener.onAnswerClick(getAdapterPosition(), 0);
+                    setSelectedQuestionColor(question, questionTextView1);
+                    setSelectedQuestionColor(question, questionTextViewYes);
                     break;
                 case R.id.question_2:
                 case R.id.question_false:
                     listener.onAnswerClick(getAdapterPosition(), 1);
+                    setSelectedQuestionColor(question, questionTextView2);
+                    setSelectedQuestionColor(question, questionTextViewNo);
                     break;
                 case R.id.question_3:
                     listener.onAnswerClick(getAdapterPosition(), 2);
+                    setSelectedQuestionColor(question, questionTextView3);
                     break;
                 case R.id.question_4:
                     listener.onAnswerClick(getAdapterPosition(), 3);
+                    setSelectedQuestionColor(question, questionTextView4);
                     break;
             }
         }

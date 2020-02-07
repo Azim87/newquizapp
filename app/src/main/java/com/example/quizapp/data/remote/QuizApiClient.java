@@ -3,11 +3,6 @@ package com.example.quizapp.data.remote;
 import com.example.quizapp.base.BaseRetrofitCallBack;
 import com.example.quizapp.data.IQuizRepository;
 import com.example.quizapp.data.remote.model.QuizQuestionsResponse;
-import com.example.quizapp.models.Question;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -22,17 +17,17 @@ public class QuizApiClient implements IQuizApiService {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
 
-    private QuizApiService quizApiService = retrofit.create(QuizApiService.class);
-
-
+    private QuizApiService quizApiService =
+            retrofit.create(QuizApiService.class);
 
     @Override
-    public void getQuestions(int amount, Integer category, String difficulty,
+    public void getQuestions(int amount, Integer category, String difficulty, String type,
                              IQuizRepository.QuizCallBack callBack) {
         Call<QuizQuestionsResponse> call = quizApiService.getQuestions(
                 amount,
                 category,
-                difficulty);
+                difficulty,
+                type);
         call.enqueue(new BaseRetrofitCallBack<QuizQuestionsResponse>() {
             @Override
             public void onSuccess(QuizQuestionsResponse results) {
@@ -46,13 +41,13 @@ public class QuizApiClient implements IQuizApiService {
         });
     }
 
-
     private interface QuizApiService {
         @GET("api.php")
         Call<QuizQuestionsResponse> getQuestions(
                 @Query("amount") int amount,
                 @Query("category") Integer category,
-                @Query("difficulty") String difficulty
+                @Query("difficulty") String difficulty,
+                @Query("type") String type
         );
     }
 }

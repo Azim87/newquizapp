@@ -31,4 +31,9 @@ public class HistoryStorage implements IHistoryStorage {
     public LiveData<List<QuizResult>> getAll() {
         return null;
     }
+
+    @Override
+    public int getById(int id) {
+        return 0;
+    }
 }

@@ -32,6 +32,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     private final static String EXTRA_AMOUNT = "amount";
     private final static String EXTRA_CATEGORY = "category";
     private final static String EXTRA_DIFFICULTY = "difficulty";
+    private final static String EXTRA_TYPE = "type";
     private QuizViewModel quizViewModel;
     private QuizAdapter adapter;
     private CountDownTimer countDownTimer;
@@ -45,11 +46,12 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     @BindView(R.id.quiz_skip_button) Button quizSkipButton;
     @BindView(R.id.progress_timer) TextView progressTimer;
 
-    public static void start(Context context, int amount, int category, String difficulty) {
+    public static void start(Context context, int amount, int category, String difficulty, String type) {
         Intent intent = new Intent(context, QuizActivity.class);
         intent.putExtra(EXTRA_AMOUNT, amount);
         intent.putExtra(EXTRA_CATEGORY, category);
         intent.putExtra(EXTRA_DIFFICULTY, difficulty);
+        intent.putExtra(EXTRA_TYPE, type);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
@@ -79,8 +81,9 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
 
     @SuppressLint("SetTextI18n")
     private void subscribeToViewModel() {
-        quizViewModel = ViewModelProviders.of(this)
-                .get(QuizViewModel.class);
+        quizViewModel = ViewModelProviders.of(this).get(QuizViewModel.class);
+
+
         quizViewModel.questionList.observe(this, questions -> {
             loadingProgressBar.setVisibility(View.INVISIBLE);
             quizSkipButton.setVisibility(View.VISIBLE);
@@ -98,10 +101,9 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
             countDownTimer.start();
         });
 
-        quizViewModel.finishEvent.observe(this, integer -> {
-            finish();
+        quizViewModel.finishEvent.observe(this, aVoid -> {
             ResultActivity.start(QuizActivity.this);
-
+            finish();
         });
 
         countDownTimer = new CountDownTimer(startTimer, 1) {
@@ -125,10 +127,14 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         int amount = getIntent().getIntExtra(EXTRA_AMOUNT, 0);
         int category = getIntent().getIntExtra(EXTRA_CATEGORY, 0);
         String difficulty = getIntent().getStringExtra(EXTRA_DIFFICULTY).toLowerCase();
+        String type = getIntent().getStringExtra(EXTRA_TYPE).toLowerCase();
         if (difficulty.equals("any difficulty")) {
             difficulty = null;
         }
-        quizViewModel.getQuizQuestion(amount, category, difficulty);
+        if (type.equals("any type")) {
+            type = null;
+        }
+        quizViewModel.getQuizQuestion(amount, category, difficulty, type);
     }
 
     @Override

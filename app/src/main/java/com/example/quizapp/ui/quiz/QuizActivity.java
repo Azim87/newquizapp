@@ -100,6 +100,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
             quizRecycler.smoothScrollToPosition(position);
             countDownTimer.cancel();
             progressTimer.setTextColor(Color.BLUE);
+            progressTimer.setVisibility(View.VISIBLE);
             countDownTimer.start();
         });
 
@@ -121,7 +122,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
                     progressTimer.setTextColor(Color.RED);
                     if (progressTimer.getVisibility() == View.VISIBLE) {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(300);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

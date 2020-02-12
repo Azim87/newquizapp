@@ -39,7 +39,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     private QuizViewModel quizViewModel;
     private QuizAdapter adapter;
     private CountDownTimer countDownTimer;
-    private long startTimer = 15000;
+    private long startTimer = 16000;
 
     @BindView(R.id.quiz_recycler) RecyclerView quizRecycler;
     @BindView(R.id.quiz_progress) ProgressBar quizProgress;
@@ -67,8 +67,7 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
         initViews();
         subscribeToViewModel();
         getExtraIntentData();
-        loadingProgressBar.setVisibility(View.VISIBLE);
-
+        isLoading();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -85,10 +84,10 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
 
     @SuppressLint("SetTextI18n")
     private void subscribeToViewModel() {
-        quizViewModel = ViewModelProviders.of(this).get(QuizViewModel.class);
+        quizViewModel = ViewModelProviders.of(this)
+                .get(QuizViewModel.class);
 
         quizViewModel.questionList.observe(this, questions -> {
-            loadingProgressBar.setVisibility(View.INVISIBLE);
             quizSkipButton.setVisibility(View.VISIBLE);
             quizProgress.setMax(questions.size());
             adapter.setList(questions);
@@ -107,14 +106,15 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
             },100);
         });
 
-        quizViewModel.finishEvent.observe(this, aVoid -> {
-            finish();
-        });
+        quizViewModel.finishEvent.observe(this, aVoid -> finish());
 
         quizViewModel.message.observe(this, ShowToast::message);
 
-        quizViewModel.openResultEvent.observe(this, resultId ->
-                ResultActivity.start(QuizActivity.this, resultId));
+        quizViewModel.openResultEvent.observe(this, resultId -> {
+            finish();
+            ResultActivity.start(QuizActivity.this, resultId);
+        });
+
 
         countDownTimer = new CountDownTimer(startTimer, 1) {
             @SuppressLint("DefaultLocale")
@@ -141,6 +141,19 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
                 quizViewModel.onSkipClick();
             }
         };
+    }
+
+    private void isLoading() {
+        quizViewModel.isLoading.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isLoading) {
+                if (isLoading != null) {
+                    if (isLoading)
+                        loadingProgressBar.setVisibility(View.VISIBLE);
+                    else loadingProgressBar.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
     }
 
     private void getExtraIntentData() {

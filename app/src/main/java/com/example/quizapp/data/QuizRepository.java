@@ -78,12 +78,6 @@ public class QuizRepository implements IQuizRepository {
     }
 
     @Override
-    public int getById(int id) {
-        mHistoryStorage.getById(id);
-        return 0;
-    }
-
-    @Override
     public LiveData<List<QuizResult>> getAll() {
         mHistoryStorage.getAll();
         return null;

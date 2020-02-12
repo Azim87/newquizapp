@@ -19,8 +19,6 @@ public interface IQuizRepository {
 
     int deleteById(int id);
 
-    int getById(int id);
-
     LiveData<List<QuizResult>> getAll();
 
     interface QuizCallBack extends IBaseCallBack<List<Question>> {}

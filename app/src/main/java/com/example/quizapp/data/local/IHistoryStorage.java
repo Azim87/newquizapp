@@ -2,6 +2,7 @@ package com.example.quizapp.data.local;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.quizapp.models.History;
 import com.example.quizapp.models.QuizResult;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface IHistoryStorage {
 
     int deleteById(int id);
 
-    int getById(int id);
+    LiveData<List<History>> getAllHistory();
 
     LiveData<List<QuizResult>> getAll();
 }

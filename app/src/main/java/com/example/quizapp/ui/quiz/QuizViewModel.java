@@ -14,18 +14,47 @@ import java.util.List;
 
 public class QuizViewModel extends ViewModel {
     private IQuizRepository quizRepository = App.iQuizRepository;
-    private List<Question> mQuestion;
     private int amount;
     private int category;
     private String difficulty;
 
+    private List<Question> mQuestion;
     MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
     MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
+    MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
     SingleLiveEvent<Void> finishEvent = new SingleLiveEvent<>();
     SingleLiveEvent<String> message = new SingleLiveEvent<>();
     SingleLiveEvent<Integer> openResultEvent = new SingleLiveEvent<>();
 
+    private void finishQuiz() {
+        QuizResult quizResult = new QuizResult(
+                0,
+                category,
+                difficulty,
+                mQuestion,
+                getCorrectAnswers(),
+                new Date()
+        );
+        int resultId = quizRepository.saveQuizResult(quizResult);
+        finishEvent.call();
+        openResultEvent.setValue(resultId);
+    }
+
+    private int getCorrectAnswers() {
+        int correctAnswers = 0;
+        for (Question question : mQuestion) {
+            Integer selectedAnswerPosition = question.getSelectedAnswerPosition();
+            if (selectedAnswerPosition != null &&
+                    selectedAnswerPosition >= 0 &&
+                    question.getAnswers().get(selectedAnswerPosition).equals(question.getCorrectAnswer())) {
+                correctAnswers++;
+            }
+        }
+        return correctAnswers;
+    }
+
     void getQuizQuestion(int amount, int category, String difficulty, String type) {
+        isLoading.setValue(true);
         this.amount = amount;
         this.category = category;
         this.difficulty = difficulty;
@@ -34,6 +63,7 @@ public class QuizViewModel extends ViewModel {
             @Override
             public void onSuccess(List<Question> result) {
                 if (result != null) {
+                    isLoading.setValue(false);
                     mQuestion = result;
                     questionList.setValue(mQuestion);
                     currentQuestionPosition.setValue(0);
@@ -42,12 +72,11 @@ public class QuizViewModel extends ViewModel {
 
             @Override
             public void onFailure(Exception e) {
+                isLoading.setValue(false);
                 message.setValue(e.getLocalizedMessage());
             }
         });
     }
-
-
 
     void onAnswerPositionClick(int position, int selectedAnswerPosition) {
         if (currentQuestionPosition.getValue() == null || mQuestion == null) {
@@ -62,24 +91,6 @@ public class QuizViewModel extends ViewModel {
         } else {
             currentQuestionPosition.setValue(currentQuestionPosition.getValue() + 1);
         }
-    }
-
-    private void finishQuiz() {
-        QuizResult quizResult = new QuizResult(
-                0,
-                category,
-                difficulty,
-                mQuestion,
-                getCorrectAnswers(),
-                new Date()
-        );
-        int resultId = quizRepository.saveQuizResult(quizResult);
-        openResultEvent.setValue(resultId);
-        finishEvent.call();
-    }
-
-    private int getCorrectAnswers() {
-        return 0;
     }
 
     void onSkipClick() {

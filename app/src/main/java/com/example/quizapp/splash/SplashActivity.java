@@ -10,7 +10,7 @@ import com.example.quizapp.ui.main.MainActivity;
 import com.example.quizapp.utils.Logger;
 
 public class SplashActivity extends AppCompatActivity {
-    private static long splashTime = 1500;
+    private static long splashTime = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

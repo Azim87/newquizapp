@@ -41,7 +41,6 @@ public class MainFragment extends BaseFragment {
     @BindView(R.id.main_container) ConstraintLayout view;
     @BindView(R.id.main_progress_bar) ProgressBar progressBar;
     private Animation animation;
-    private MediaPlayer mediaPlayer;
 
     public static MainFragment newInstance() {
         return new MainFragment();
@@ -140,9 +139,7 @@ public class MainFragment extends BaseFragment {
     //endregion
 
     private void startOnClick() {
-        mediaPlayer = MediaPlayer.create(getActivity(), R.raw.stapler);
         startButton.setOnClickListener(view -> {
-            mediaPlayer.start();
                 view.startAnimation(animation);
                 new Handler().postDelayed(() -> {
                     int categoryId = 0;
@@ -157,7 +154,6 @@ public class MainFragment extends BaseFragment {
                 }, 500);
         });
     }
-
 
     @OnClick(R.id.button_retry)
     void retry(View view) {

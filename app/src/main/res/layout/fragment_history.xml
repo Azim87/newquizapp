@@ -19,14 +19,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="25dp"
-        android:fontFamily="@font/sfdisplay_semibold"
+        android:fontFamily="@font/sftext_semibold"
         android:gravity="center_horizontal"
         android:text="No quiz history yet"
-        android:textSize="25sp"
-        android:visibility="invisible"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_history" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/history_recycler"

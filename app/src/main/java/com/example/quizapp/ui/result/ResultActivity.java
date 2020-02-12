@@ -20,6 +20,7 @@ import butterknife.OnClick;
 public class ResultActivity extends AppCompatActivity {
     private static String EXTRA_ID = "resultId";
     private ResultViewModel resultViewModel;
+    private int id;
 
     @BindView(R.id.result_categ) TextView resultCategory;
     @BindView(R.id.result_finish) Button finishButton;
@@ -37,17 +38,18 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         ButterKnife.bind(this);
         subscribeToViewModel();
-        int id = getIntent().getIntExtra(EXTRA_ID, 0);
-        Log.d("ololo", "onCreate: " + id);
+        id = getIntent().getIntExtra(EXTRA_ID, 0);
     }
 
     private void subscribeToViewModel() {
-        resultViewModel = ViewModelProviders.of(this).get(ResultViewModel.class);
+        resultViewModel = ViewModelProviders.of(this)
+                .get(ResultViewModel.class);
         resultCategory.setSelected(true);
+        getQuizResultData();
     }
 
     private void getQuizResultData() {
-        resultViewModel.getResult();
+        resultViewModel.getResult(id);
     }
 
     @OnClick(R.id.result_finish)

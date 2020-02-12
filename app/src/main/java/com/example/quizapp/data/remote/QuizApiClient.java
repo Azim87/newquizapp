@@ -27,7 +27,8 @@ public class QuizApiClient implements IQuizApiService {
                 amount,
                 category,
                 difficulty,
-                type);
+                type
+        );
         call.enqueue(new BaseRetrofitCallBack<QuizQuestionsResponse>() {
             @Override
             public void onSuccess(QuizQuestionsResponse results) {

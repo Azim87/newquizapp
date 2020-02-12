@@ -1,15 +1,40 @@
 package com.example.quizapp.models;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+
+import com.example.quizapp.data.local.converter.QuestionConverters;
+import com.example.quizapp.data.local.converter.TimeStampConverters;
+
 import java.util.Date;
 import java.util.List;
 
+@Entity(tableName = "quiz_result")
+
 public class QuizResult {
 
+    public QuizResult() {}
+
+    @PrimaryKey(autoGenerate = true)
     private int id;
+
+    @ColumnInfo(name = "category")
     private int category;
+
+    @ColumnInfo(name = "difficulty")
     private String difficulty;
+
+    @ColumnInfo(name = "questions")
+    @TypeConverters(QuestionConverters.class)
     private List<Question> questions;
-    private int correctAnswers;
+
+    @ColumnInfo(name = "correct_answers_amount")
+    private int correctAnswersAmount;
+
+    @ColumnInfo(name = "created_at")
+    @TypeConverters(TimeStampConverters.class)
     private Date creationDate;
 
     public QuizResult(int id, int category, String difficulty, List<Question> questions, int correctAnswers, Date creationDate) {
@@ -17,7 +42,7 @@ public class QuizResult {
         this.category = category;
         this.difficulty = difficulty;
         this.questions = questions;
-        this.correctAnswers = correctAnswers;
+        this.correctAnswersAmount = correctAnswers;
         this.creationDate = creationDate;
     }
 
@@ -53,12 +78,12 @@ public class QuizResult {
         this.questions = questions;
     }
 
-    public int getCorrectAnswers() {
-        return correctAnswers;
+    public int getCorrectAnswersAmount() {
+        return correctAnswersAmount;
     }
 
-    public void setCorrectAnswers(int correctAnswers) {
-        this.correctAnswers = correctAnswers;
+    public void setCorrectAnswersAmount(int correctAnswersAmount) {
+        this.correctAnswersAmount = correctAnswersAmount;
     }
 
     public Date getCreationDate() {
@@ -68,4 +93,4 @@ public class QuizResult {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
- }
+}

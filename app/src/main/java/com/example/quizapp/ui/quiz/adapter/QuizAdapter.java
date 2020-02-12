@@ -140,7 +140,8 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         }
 
         private void setSelectedQuestionColor(Question question, TextView textView) {
-            if (question.getAnswers().get(question.getSelectedAnswerPosition()).equals(question.getCorrectAnswer())) {
+            if (question.getAnswers().get(question.getSelectedAnswerPosition())
+                    .equals(question.getCorrectAnswer())) {
                 textView.setBackgroundResource(R.drawable.question_true_style);
                 textView.setTextColor(Color.WHITE);
             } else {

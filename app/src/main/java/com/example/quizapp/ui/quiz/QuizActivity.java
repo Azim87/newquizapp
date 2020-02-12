@@ -144,14 +144,11 @@ public class QuizActivity extends AppCompatActivity implements QuizAdapter.OnQue
     }
 
     private void isLoading() {
-        quizViewModel.isLoading.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean isLoading) {
-                if (isLoading != null) {
-                    if (isLoading)
-                        loadingProgressBar.setVisibility(View.VISIBLE);
-                    else loadingProgressBar.setVisibility(View.INVISIBLE);
-                }
+        quizViewModel.isLoading.observe(this, isLoading -> {
+            if (isLoading != null) {
+                if (isLoading)
+                    loadingProgressBar.setVisibility(View.VISIBLE);
+                else loadingProgressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

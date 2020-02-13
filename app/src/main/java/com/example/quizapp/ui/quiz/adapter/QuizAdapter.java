@@ -82,7 +82,6 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         private OnQuestionClickListener listener;
         private Animation questionAnimation;
         private Question question;
-        private boolean isTrue;
 
         QuizViewHolder(@NonNull View itemView, OnQuestionClickListener listener) {
             super(itemView);
@@ -98,7 +97,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         }
 
         void onBind(Question question) {
-            resetQuestionBackgroundColor();
+            reset();
             this.question = question;
 
             questionTitle.setText(Html.fromHtml(question.getQuestion()));
@@ -232,19 +231,19 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             view.startAnimation(questionAnimation);
         }
 
-        private void resetQuestionBackgroundColor() {
-            questionTextView1.setBackgroundResource(R.drawable.quiestion_textview_style);
-            questionTextView2.setBackgroundResource(R.drawable.quiestion_textview_style);
-            questionTextView3.setBackgroundResource(R.drawable.quiestion_textview_style);
-            questionTextView4.setBackgroundResource(R.drawable.quiestion_textview_style);
-            questionTextView1.setTextColor(ContextCompat.getColor(questionTextView1.getContext(), R.color.colorQuestion));
-            questionTextView2.setTextColor(ContextCompat.getColor(questionTextView2.getContext(), R.color.colorQuestion));
-            questionTextView3.setTextColor(ContextCompat.getColor(questionTextView3.getContext(), R.color.colorQuestion));
-            questionTextView4.setTextColor(ContextCompat.getColor(questionTextView4.getContext(), R.color.colorQuestion));
-            questionTrue.setBackgroundResource(R.drawable.quiestion_textview_style);
-            questionFalse.setBackgroundResource(R.drawable.quiestion_textview_style);
-            questionTrue.setTextColor(ContextCompat.getColor(questionTrue.getContext(), R.color.colorQuestion));
-            questionFalse.setTextColor(ContextCompat.getColor(questionFalse.getContext(), R.color.colorQuestion));
+        private void reset() {
+            resetAnsweredViews(
+                    questionTextView1, questionTextView2,
+                    questionTextView3, questionTextView4,
+                    questionTrue, questionFalse
+            );
+        }
+
+        private void resetAnsweredViews(TextView... textViews) {
+            for (TextView view: textViews) {
+                view.setTextColor(ContextCompat.getColor(questionTextView4.getContext(), R.color.colorQuestion));
+                view.setBackgroundResource(R.drawable.quiestion_textview_style);
+            }
         }
 
         private void enableQuestionViews(boolean enabled) {

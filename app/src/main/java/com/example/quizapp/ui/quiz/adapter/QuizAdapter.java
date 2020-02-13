@@ -1,10 +1,7 @@
 package com.example.quizapp.ui.quiz.adapter;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.quizapp.R;
 import com.example.quizapp.models.EType;
 import com.example.quizapp.models.Question;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,6 +82,7 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         private OnQuestionClickListener listener;
         private Animation questionAnimation;
         private Question question;
+        private boolean isTrue;
 
         QuizViewHolder(@NonNull View itemView, OnQuestionClickListener listener) {
             super(itemView);
@@ -98,7 +98,9 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
         }
 
         void onBind(Question question) {
+            resetQuestionBackgroundColor();
             this.question = question;
+
             questionTitle.setText(Html.fromHtml(question.getQuestion()));
             if (question.getType().equals(EType.MULTIPLE)) {
                 showMultipleQuestionType(question);
@@ -106,14 +108,16 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             } else {
                 hideMultipleType();
             }
+
             if (question.getType().equals(EType.BOOLEAN)) {
                 showBooleanQuestionType();
             }
+
             if (question.getSelectedAnswerPosition() != null) {
                 enableQuestionViews(false);
+                setSelectedQuestionBackgroundColor();
             } else {
                 enableQuestionViews(true);
-                resetQuestionBackgroundColor();
             }
         }
 
@@ -139,14 +143,62 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             containerBoolean.setVisibility(View.VISIBLE);
         }
 
-        private void setSelectedQuestionColor(Question question, TextView textView) {
-            if (question.getAnswers().get(question.getSelectedAnswerPosition())
-                    .equals(question.getCorrectAnswer())) {
+        private void setSelectedQuestionColor(TextView textView) {
+            if (question.getAnswers().get(question.getSelectedAnswerPosition()).equals(question.getCorrectAnswer())) {
                 textView.setBackgroundResource(R.drawable.question_true_style);
                 textView.setTextColor(Color.WHITE);
             } else {
                 textView.setBackgroundResource(R.drawable.question_false_style);
                 textView.setTextColor(Color.WHITE);
+            }
+        }
+
+        private void setSelectedQuestionBackgroundColor() {
+            switch (question.getSelectedAnswerPosition()) {
+                case 0:
+                    if (question.getCorrectAnswer().equals(question.getAnswers().get(0))) {
+                        questionTextView1.setBackgroundResource(R.drawable.question_true_style);
+                        questionTextView1.setTextColor(Color.WHITE);
+                        questionTrue.setBackgroundResource(R.drawable.question_true_style);
+                        questionTrue.setTextColor(Color.WHITE);
+                    } else {
+                        questionTextView1.setBackgroundResource(R.drawable.question_false_style);
+                        questionTextView1.setTextColor(Color.WHITE);
+                        questionTrue.setBackgroundResource(R.drawable.question_false_style);
+                        questionTrue.setTextColor(Color.WHITE);
+                    }
+                    break;
+                case 1:
+                    if (question.getCorrectAnswer().equals(question.getAnswers().get(1))) {
+                        questionTextView2.setBackgroundResource(R.drawable.question_true_style);
+                        questionTextView2.setTextColor(Color.WHITE);
+                        questionTrue.setBackgroundResource(R.drawable.question_true_style);
+                        questionTrue.setTextColor(Color.WHITE);
+                    } else {
+                        questionTextView2.setBackgroundResource(R.drawable.question_false_style);
+                        questionTextView2.setTextColor(Color.WHITE);
+                        questionFalse.setBackgroundResource(R.drawable.question_false_style);
+                        questionFalse.setTextColor(Color.WHITE);
+                    }
+                    break;
+                case 2:
+                    if (question.getCorrectAnswer().equals(question.getAnswers().get(2))) {
+                        questionTextView3.setBackgroundResource(R.drawable.question_true_style);
+                        questionTextView3.setTextColor(Color.WHITE);
+                    } else {
+                        questionTextView3.setBackgroundResource(R.drawable.question_false_style);
+                        questionTextView3.setTextColor(Color.WHITE);
+                    }
+                    break;
+                case 3:
+                    if (question.getCorrectAnswer().equals(question.getAnswers().get(3))) {
+                        questionTextView4.setBackgroundResource(R.drawable.question_true_style);
+                        questionTextView4.setTextColor(Color.WHITE);
+                    } else {
+                        questionTextView4.setBackgroundResource(R.drawable.question_false_style);
+                        questionTextView4.setTextColor(Color.WHITE);
+                    }
+                    break;
             }
         }
 
@@ -156,22 +208,22 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
                 case R.id.question_1:
                 case R.id.question_true:
                     listener.onAnswerClick(getAdapterPosition(), 0);
-                    setSelectedQuestionColor(question, questionTextView1);
-                    setSelectedQuestionColor(question, questionTrue);
+                    setSelectedQuestionColor(questionTextView1);
+                    setSelectedQuestionColor(questionTrue);
                     break;
                 case R.id.question_2:
                 case R.id.question_false:
                     listener.onAnswerClick(getAdapterPosition(), 1);
-                    setSelectedQuestionColor(question, questionTextView2);
-                    setSelectedQuestionColor(question, questionFalse);
+                    setSelectedQuestionColor(questionTextView2);
+                    setSelectedQuestionColor(questionFalse);
                     break;
                 case R.id.question_3:
                     listener.onAnswerClick(getAdapterPosition(), 2);
-                    setSelectedQuestionColor(question, questionTextView3);
+                    setSelectedQuestionColor(questionTextView3);
                     break;
                 case R.id.question_4:
                     listener.onAnswerClick(getAdapterPosition(), 3);
-                    setSelectedQuestionColor(question, questionTextView4);
+                    setSelectedQuestionColor(questionTextView4);
                     break;
             }
         }
@@ -185,14 +237,14 @@ public class QuizAdapter extends RecyclerView.Adapter<QuizAdapter.QuizViewHolder
             questionTextView2.setBackgroundResource(R.drawable.quiestion_textview_style);
             questionTextView3.setBackgroundResource(R.drawable.quiestion_textview_style);
             questionTextView4.setBackgroundResource(R.drawable.quiestion_textview_style);
+            questionTextView1.setTextColor(ContextCompat.getColor(questionTextView1.getContext(), R.color.colorQuestion));
+            questionTextView2.setTextColor(ContextCompat.getColor(questionTextView2.getContext(), R.color.colorQuestion));
+            questionTextView3.setTextColor(ContextCompat.getColor(questionTextView3.getContext(), R.color.colorQuestion));
+            questionTextView4.setTextColor(ContextCompat.getColor(questionTextView4.getContext(), R.color.colorQuestion));
             questionTrue.setBackgroundResource(R.drawable.quiestion_textview_style);
             questionFalse.setBackgroundResource(R.drawable.quiestion_textview_style);
-            questionTextView1.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorQuestion));
-            questionTextView2.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorQuestion));
-            questionTextView3.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorQuestion));
-            questionTextView4.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorQuestion));
-            questionTrue.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorQuestion));
-            questionFalse.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.colorQuestion));
+            questionTrue.setTextColor(ContextCompat.getColor(questionTrue.getContext(), R.color.colorQuestion));
+            questionFalse.setTextColor(ContextCompat.getColor(questionFalse.getContext(), R.color.colorQuestion));
         }
 
         private void enableQuestionViews(boolean enabled) {

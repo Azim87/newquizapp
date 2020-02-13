@@ -14,6 +14,7 @@ public class App extends Application {
     public static App instance;
     public static IQuizRepository iQuizRepository;
     public static QuizDataBase quizDataBase;
+    public static HistoryStorage historyStorage;
 
     @Override
     public void onCreate() {
@@ -28,8 +29,8 @@ public class App extends Application {
                 .build();
 
         iQuizRepository = new QuizRepository(
-                new QuizApiClient(),
-                new HistoryStorage(quizDataBase.getHistoryDao())
+                new QuizApiClient()
         );
+        historyStorage = new HistoryStorage(quizDataBase.getHistoryDao());
     }
 }

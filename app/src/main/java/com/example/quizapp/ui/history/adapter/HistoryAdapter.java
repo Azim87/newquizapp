@@ -11,7 +11,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.quizapp.App;
 import com.example.quizapp.R;
+import com.example.quizapp.models.History;
 import com.example.quizapp.models.QuizResult;
 import com.example.quizapp.utils.ShowToast;
 
@@ -22,7 +24,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryViewHolder> {
-    private List<String> mHistory = new ArrayList<>();
+    private List<History> mHistory = new ArrayList<>();
     private HistoryDetailListener listener;
     private Context context;
 
@@ -30,7 +32,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
         this.listener = listener;
     }
 
-    public void historyList(List<String> history) {
+    public void historyList(List<History> history) {
         mHistory.clear();
         mHistory.addAll(history);
         notifyDataSetChanged();
@@ -51,7 +53,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
 
     @Override
     public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
-        holder.category.setText(String.valueOf(mHistory.get(position)));
+        holder.bind(mHistory.get(position));
     }
 
     @Override
@@ -75,7 +77,7 @@ public class HistoryAdapter extends RecyclerView.Adapter<HistoryAdapter.HistoryV
                     detailListener.onDetailPosition(getAdapterPosition()));
         }
 
-        private void bind(QuizResult result) {
+        private void bind(History result) {
             category.setText("Category: " + result.getCategory());
             category.setSelected(true);
             imageMore.setOnClickListener(v -> {

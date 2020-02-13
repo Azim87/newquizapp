@@ -8,6 +8,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,8 +16,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.quizapp.R;
 import com.example.quizapp.base.BaseFragment;
+import com.example.quizapp.models.History;
+import com.example.quizapp.models.QuizResult;
 import com.example.quizapp.ui.detail.HistoryDetailsActivity;
 import com.example.quizapp.ui.history.adapter.HistoryAdapter;
+import com.example.quizapp.utils.ShowToast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 

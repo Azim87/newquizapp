@@ -11,15 +11,5 @@ import java.util.List;
 public interface IQuizRepository {
     void getQuizQuestions(int amount, Integer category, String difficulty, String type, QuizCallBack callBack);
 
-    QuizResult getQuizResult(int id);
-
-    int saveQuizResult(QuizResult quizResult);
-
-    void deleteAll();
-
-    int deleteById(int id);
-
-    LiveData<List<QuizResult>> getAll();
-
     interface QuizCallBack extends IBaseCallBack<List<Question>> {}
 }

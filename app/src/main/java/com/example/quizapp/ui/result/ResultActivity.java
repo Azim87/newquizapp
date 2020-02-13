@@ -9,9 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.quizapp.R;
+import com.example.quizapp.models.QuizResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,14 +22,13 @@ import butterknife.OnClick;
 public class ResultActivity extends AppCompatActivity {
     private static String EXTRA_ID = "resultId";
     private ResultViewModel resultViewModel;
-    private int id;
 
     @BindView(R.id.result_categ) TextView resultCategory;
     @BindView(R.id.result_finish) Button finishButton;
 
-    public static void start(Context context, int resultId) {
+    public static void start(Context context, Integer resultId) {
         Intent resultIntent = new Intent(context, ResultActivity.class);
-        resultIntent.putExtra(EXTRA_ID, resultId);
+        resultIntent.putExtra(ResultActivity.EXTRA_ID, resultId);
         resultIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         context.startActivity(resultIntent);
     }
@@ -38,7 +39,6 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
         ButterKnife.bind(this);
         subscribeToViewModel();
-        id = getIntent().getIntExtra(EXTRA_ID, 0);
     }
 
     private void subscribeToViewModel() {
@@ -49,7 +49,11 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void getQuizResultData() {
+        Integer id = getIntent().getIntExtra(EXTRA_ID, 0);
         resultViewModel.getResult(id);
+        resultViewModel.resultMutableLiveData.observe(this, quizResult -> {
+
+        });
     }
 
     @OnClick(R.id.result_finish)

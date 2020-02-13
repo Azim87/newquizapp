@@ -6,10 +6,10 @@ public class History {
     private int id;
     private int correctAnswers;
     private int category;
-    private String difficulty;
+    private EDifficulty difficulty;
     private Date creationDate;
 
-    public History(int id, int correctAnswers, int category, String difficulty, Date creationDate) {
+    public History(int id, int correctAnswers, int category, EDifficulty difficulty, Date creationDate) {
         this.id = id;
         this.correctAnswers = correctAnswers;
         this.category = category;
@@ -41,11 +41,11 @@ public class History {
         this.category = category;
     }
 
-    public String getDifficulty() {
+    public EDifficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(String difficulty) {
+    public void setDifficulty(EDifficulty difficulty) {
         this.difficulty = difficulty;
     }
 

@@ -12,19 +12,23 @@ import java.util.List;
 public class QuestionConverters {
     @TypeConverter
     public static List<Question> fromRaw(String raw) {
-        if (raw.isEmpty()) return null;
+        if (raw == null) {
+            return null;
+        }
+
         Gson gson = new Gson();
-        Type type = new TypeToken<Question>() {
-        }.getType();
+        Type type = new TypeToken<List<Question>>() {}.getType();
         return gson.fromJson(raw, type);
     }
 
     @TypeConverter
     public static String toRaw(List<Question> questions) {
-        if (questions.isEmpty()) return null;
+        if (questions == null) {
+            return null;
+        }
+
         Gson gson = new Gson();
-        Type type = new TypeToken<List<Question>>() {
-        }.getType();
+        Type type = new TypeToken<List<Question>>() {}.getType();
         return gson.toJson(questions, type);
     }
 }

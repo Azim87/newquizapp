@@ -12,10 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "quiz_result")
-
 public class QuizResult {
-
-    public QuizResult() {}
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -37,12 +34,12 @@ public class QuizResult {
     @TypeConverters(TimeStampConverters.class)
     private Date creationDate;
 
-    public QuizResult(int id, int category, String difficulty, List<Question> questions, int correctAnswers, Date creationDate) {
+    public QuizResult(int id, int category, String difficulty, List<Question> questions, int correctAnswersAmount, Date creationDate) {
         this.id = id;
         this.category = category;
         this.difficulty = difficulty;
         this.questions = questions;
-        this.correctAnswersAmount = correctAnswers;
+        this.correctAnswersAmount = correctAnswersAmount;
         this.creationDate = creationDate;
     }
 

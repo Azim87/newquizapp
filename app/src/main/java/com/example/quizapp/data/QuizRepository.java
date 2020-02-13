@@ -1,10 +1,7 @@
 package com.example.quizapp.data;
-import androidx.lifecycle.LiveData;
 
-import com.example.quizapp.data.local.IHistoryStorage;
 import com.example.quizapp.data.remote.IQuizApiService;
 import com.example.quizapp.models.Question;
-import com.example.quizapp.models.QuizResult;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,12 +9,9 @@ import java.util.List;
 
 public class QuizRepository implements IQuizRepository {
     private IQuizApiService mQuizApiClient;
-    private IHistoryStorage mHistoryStorage;
-    public QuizRepository(
-            IQuizApiService apiService,
-            IHistoryStorage historyStorage) {
+
+    public QuizRepository(IQuizApiService apiService) {
         mQuizApiClient = apiService;
-        mHistoryStorage = historyStorage;
     }
 
     //region get questions from remote data source
@@ -50,37 +44,6 @@ public class QuizRepository implements IQuizRepository {
         Collections.shuffle(answers);
         question.setAnswers(answers);
         return question;
-    }
-    //endregion
-
-    //region local data source
-    @Override
-    public QuizResult getQuizResult(int id) {
-        mHistoryStorage.getQuizResult(id);
-        return null;
-    }
-
-    @Override
-    public int saveQuizResult(QuizResult quizResult) {
-        mHistoryStorage.saveQuizResult(quizResult);
-        return 0;
-    }
-
-    @Override
-    public void deleteAll() {
-        mHistoryStorage.deleteAll();
-    }
-
-    @Override
-    public int deleteById(int id) {
-        mHistoryStorage.deleteById(id);
-        return 0;
-    }
-
-    @Override
-    public LiveData<List<QuizResult>> getAll() {
-        mHistoryStorage.getAll();
-        return null;
     }
     //endregion
 }

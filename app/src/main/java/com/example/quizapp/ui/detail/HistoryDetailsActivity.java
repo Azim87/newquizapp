@@ -9,9 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class HistoryDetailsActivity extends AppCompatActivity {
 
-
     public static void start(Context context) {
-        context.startActivity(new Intent(context, HistoryDetailsActivity.class));
+        Intent intent = new Intent(context, HistoryDetailsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        context.startActivity(intent);
     }
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -9,11 +9,11 @@ import com.example.quizapp.App;
 import com.example.quizapp.models.QuizResult;
 
 public class ResultViewModel extends ViewModel {
-    MutableLiveData<QuizResult> resultMutableLiveData = new MutableLiveData<>();
+    public MutableLiveData<QuizResult> resultMutableLiveData = new MutableLiveData<>();
 
     public void getResult(int id) {
-        QuizResult result = App.quizDataBase.getHistoryDao().get(id);
-        Log.d("ololo", "getResult: " + result);
+        QuizResult result = App.historyStorage.getQuizResult(id);
         resultMutableLiveData.setValue(result);
+        Log.d("ololo", "getResult: " + result);
     }
 }

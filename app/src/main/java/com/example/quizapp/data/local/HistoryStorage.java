@@ -32,7 +32,7 @@ public class HistoryStorage implements IHistoryStorage {
                         result.getId(),
                         result.getCorrectAnswersAmount(),
                         result.getCategory(),
-                        result.getDifficulty(),
+                        result.getQuestions().get(0).getDifficulty(),
                         result.getCreationDate()
                 ));
             }

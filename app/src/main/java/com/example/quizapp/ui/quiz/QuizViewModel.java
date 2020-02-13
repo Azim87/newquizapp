@@ -1,11 +1,15 @@
 package com.example.quizapp.ui.quiz;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.quizapp.App;
 import com.example.quizapp.base.SingleLiveEvent;
 import com.example.quizapp.data.IQuizRepository;
+import com.example.quizapp.data.QuizRepository;
+import com.example.quizapp.data.local.HistoryStorage;
 import com.example.quizapp.models.Question;
 import com.example.quizapp.models.QuizResult;
 
@@ -13,32 +17,20 @@ import java.util.Date;
 import java.util.List;
 
 public class QuizViewModel extends ViewModel {
+    private HistoryStorage historyStorage = App.historyStorage;
     private IQuizRepository quizRepository = App.iQuizRepository;
     private int amount;
     private int category;
     private String difficulty;
-
     private List<Question> mQuestion;
+
     MutableLiveData<Integer> currentQuestionPosition = new MutableLiveData<>();
     MutableLiveData<List<Question>> questionList = new MutableLiveData<>();
     MutableLiveData<Boolean> isLoading = new MutableLiveData<>();
+
     SingleLiveEvent<Void> finishEvent = new SingleLiveEvent<>();
     SingleLiveEvent<String> message = new SingleLiveEvent<>();
     SingleLiveEvent<Integer> openResultEvent = new SingleLiveEvent<>();
-
-    private void finishQuiz() {
-        QuizResult quizResult = new QuizResult(
-                0,
-                category,
-                difficulty,
-                mQuestion,
-                getCorrectAnswers(),
-                new Date()
-        );
-        int resultId = quizRepository.saveQuizResult(quizResult);
-        finishEvent.call();
-        openResultEvent.setValue(resultId);
-    }
 
     private int getCorrectAnswers() {
         int correctAnswers = 0;
@@ -51,6 +43,21 @@ public class QuizViewModel extends ViewModel {
             }
         }
         return correctAnswers;
+    }
+
+    void finishQuiz() {
+        QuizResult quizResult = new QuizResult(
+                0,
+                category,
+                difficulty,
+                mQuestion,
+                getCorrectAnswers(),
+                new Date()
+        );
+        int resultId = historyStorage.saveQuizResult(quizResult);
+        finishEvent.call();
+        openResultEvent.setValue(resultId);
+        Log.d("ololo", "finishQuiz: " + quizResult.getQuestions());
     }
 
     void getQuizQuestion(int amount, int category, String difficulty, String type) {
